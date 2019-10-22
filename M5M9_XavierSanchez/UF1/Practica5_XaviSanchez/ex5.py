@@ -1,37 +1,30 @@
-import unittest
+import sys
 
-from ex1 import EquacioPrimerGrau
+class llista_primers:
+    def __init__(self, n):
+        self.n = n
+        self.llista = []
+        self.busca()
 
-
-
-class TestEquacio(unittest.TestCase):
-
-    def test_positiu(self):
-        eq = EquacioPrimerGrau("2x + 3 = 7")
-        self.assertEqual(eq.calcula(),2)
-
-    def testincorrecte(self):
-        eq = EquacioPrimerGrau("2x / 3 = 7")
-        self.assertEqual(eq.calcula(),"Operador incorrecte!!!!")
-        self.assertIsInstance(eq.operacio, str)
-
-    def test_negatiu(self):
-        eq = EquacioPrimerGrau("2x - 3 = 7")
-        self.assertEqual(eq.calcula(),5)
-
-    def test_float(self):
-        eq = EquacioPrimerGrau("2.3x - 8.4 = 9.8")
-        self.assertEqual(eq.calcula(),7.913043478260872)
-
-    def test_caracter_erroni(self):
-        eq = EquacioPrimerGrau("2x - p = 7")
-        self.assertEqual(eq.calcula(),"l'equacio conte caracter no calculables: "+eq.eq)
-
-    def test_fromat_erroni(self):
-        eq = EquacioPrimerGrau("3 - 2x = 7")
-        self.assertEqual(eq.calcula(),"l'equacio no segueix el format: ax + b = c")
-
+    def busca(self):
+        if (len(self.llista) == 0):
+            self.llista.append(2)
+            self.busca()
+        elif (len(self.llista) < self.n):
+            trobat = False
+            seguent = self.llista[-1]+1
+            while not trobat:
+                for i in self.llista:
+                    if seguent%i == 0:
+                        seguent += 1
+                        trobat = False
+                        break
+                    else:
+                        trobat = True
+            self.llista.append(seguent)
+            self.busca()
 
 
 if __name__ == '__main__':
-    unittest.main()
+    l = llista_primers(int(sys.argv[1]))
+    print l.llista
