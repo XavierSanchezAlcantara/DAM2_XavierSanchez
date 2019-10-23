@@ -4,17 +4,17 @@ import json
 from random import randint
 
 bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
+
 keyboard_inici = json.dumps({'keyboard': [["play"],["Help"]], 'one_time_keyboard':True,'resize_keyboard':True})
 
 keyboard_opcions = json.dumps({'keyboard':[["Pedra"],["Paper"],["Tisora"]],'one_time_keyboard':True,'resize_keyboard':True})
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions: /pedra, /paper, /tisora ",keyboard_opcions)
-
+    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions: /pedra, /paper, /tisora ")
 @bot.message_handler(commands=['play'])
 def send_play(message):
     bot.reply_to(message, "Selecciona una de les opcions")
-    bot.reply_to(message, "Pedra= /pedra, Paper= /paper, Tisora= /tisor")
+    bot.reply_to(message, "Pedra= /pedra, Paper= /paper, Tisora= /tisor",reply_markup=keyboard_opcions)
 
 @bot.message_handler(commands=['pedra'])
 def send_joc(message):
@@ -61,7 +61,7 @@ def send_joc2(message):
     if a==0:
         bot.reply_to(message, llista[a])
         bot.reply_to(message, "Has Perdut")
-    elif a==2:
+    elif a==1:
         bot.reply_to(message, llista[a])
         bot.reply_to(message, "Has Guanyat")
     else:
