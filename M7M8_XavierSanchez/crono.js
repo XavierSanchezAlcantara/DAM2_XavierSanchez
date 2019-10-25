@@ -1,6 +1,8 @@
 window.onload = function() {
 
     visor=document.getElementById("reloj");
+    divison=document.getElementById("cronometro");
+
     document.cron.boton1.onclick = activo; 
     document.cron.boton2.onclick = pausa;
     document.cron.boton3.onclick = pausa;
@@ -11,7 +13,7 @@ window.onload = function() {
     var marcha=0;
     var cro=0;
     var i=0;
-    var fraccio="";
+    var fraccio=" ";
     }
     
 
@@ -39,6 +41,7 @@ window.onload = function() {
           marcha=1 
           document.cron.boton1.value="Reinicia"; 
           document.cron.boton2.disabled=false; 
+          document.cron.boton3.disabled=false; 
           }		
     function tiempo() { 
          actual=new Date(); 
@@ -58,6 +61,10 @@ window.onload = function() {
          if (mn<10) {mn="0"+mn;} 
          visor.innerHTML=ho+" "+mn+" "+sg+" "+cs; 
          }
+    function Fraccio(){
+        fraccio+=elcrono+", ";
+        divison.innerHTML=fraccio;
+    }
    
     function parar() { 
          clearInterval(elcrono); 
