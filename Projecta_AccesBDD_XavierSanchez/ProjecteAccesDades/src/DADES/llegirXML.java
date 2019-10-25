@@ -1,6 +1,7 @@
 package DADES;
 
 import MODEL.LineaComanda;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class llegirXML {
 	int test;
 	char status;
 	float preuUnitari;
-
+	char statusc;
 	public llegirXML() {
 
 		try {
@@ -31,6 +32,7 @@ public class llegirXML {
 			NodeList nList = doc.getElementsByTagName("article");
 			System.out.println("Client :" + doc.getDocumentElement().getAttribute("idclient"));
 			idclient = doc.getDocumentElement().getAttribute("idclient");
+			statusc = doc.getDocumentElement().getAttribute("status").charAt(0);
 			System.out.println("----------------------------");
 			test = 1;
 			for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -75,6 +77,9 @@ public class llegirXML {
 
 	public String getIdClient() {
 		return idclient;
+	}
+	public char getStatusc() {
+		return statusc;
 	}
 
 	@Override
