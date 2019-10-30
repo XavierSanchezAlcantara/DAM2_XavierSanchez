@@ -1,47 +1,93 @@
 <?xml version = "1.0"?>
+<comandes>
+	<comanda idclient="aaaa" status='0'>
 
-<comanda idclient="aaaa" status='0'>  
+		<article>
 
-   <article>
+			<codi>0001</codi>
 
-      <codi>0001</codi>
+			<unitats>500</unitats>
 
-      <unitats>500</unitats>      
-      
-      <unitatsServides>0</unitatsServides>
+			<unitatsServides>0</unitatsServides>
 
-      <preuUnitat>300</preuUnitat>
+			<preuUnitat>300</preuUnitat>
 
-      <status>0</status>
+			<status>0</status>
 
-   </article>   
+		</article>
 
-   <article>
+		<article>
 
-     <codi>0002</codi>
+			<codi>0002</codi>
 
-     <unitats>200</unitats>      
-      
-     <unitatsServides>0</unitatsServides>
+			<unitats>200</unitats>
 
-     <preuUnitat>400</preuUnitat>
+			<unitatsServides>0</unitatsServides>
 
-     <status>0</status> 
+			<preuUnitat>400</preuUnitat>
 
-   </article>   
+			<status>0</status>
 
-   <article>
+		</article>
 
-      <codi>0003</codi>
+		<article>
 
-      <unitats>100</unitats>      
-      
-      <unitatsServides>0</unitatsServides>
+			<codi>0003</codi>
 
-      <preuUnitat>530.23</preuUnitat>
+			<unitats>100</unitats>
 
-      <status>0</status>      
+			<unitatsServides>0</unitatsServides>
 
-   </article>
+			<preuUnitat>530.23</preuUnitat>
 
-</comanda>
+			<status>0</status>
+
+		</article>
+
+	</comanda>
+	<comanda idclient="bbbb" status='1'>
+
+		<article>
+
+			<codi>0003</codi>
+
+			<unitats>100</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>300</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+		<article>
+
+			<codi>0020</codi>
+
+			<unitats>50</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>400</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+		<article>
+
+			<codi>0099</codi>
+
+			<unitats>3</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>530.23</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+	</comanda>
+</comandes>

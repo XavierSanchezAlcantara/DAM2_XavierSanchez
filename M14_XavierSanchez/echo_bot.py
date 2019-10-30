@@ -4,6 +4,7 @@ import json
 from random import randint
 
 bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
+f = open("historial.txt", "a") 
 keyboard_inici = json.dumps({'keyboard': [["play"],["Help"]], 'one_time_keyboard':True,'resize_keyboard':True})
 
 keyboard_opcions = json.dumps({'keyboard':[["Pedra"],["Paper"],["Tisora"]],'one_time_keyboard':True,'resize_keyboard':True})
@@ -69,6 +70,13 @@ def send_joc2(message):
         bot.reply_to(message, "Has Empatat")
         pass
     
+    pass
+@bot.message_handler(commands=['historial'])
+def send_history(message):
+    f2= open("historial.txt", "r")
+
+    bot.reply_to(message, f2.read())
+    f2.close()
     pass
 
 bot.polling()

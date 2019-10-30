@@ -21,6 +21,7 @@ public class llegirXML {
 	char status;
 	float preuUnitari;
 	char statusc;
+
 	public llegirXML() {
 
 		try {
@@ -51,7 +52,6 @@ public class llegirXML {
 					System.out
 							.println("Unitats : " + eElement.getElementsByTagName("unitats").item(0).getTextContent());
 					unitat = Integer.parseInt(eElement.getElementsByTagName("unitats").item(0).getTextContent());
-					
 
 					preuUnitari = Float
 							.parseFloat(eElement.getElementsByTagName("preuUnitat").item(0).getTextContent());
@@ -78,6 +78,7 @@ public class llegirXML {
 	public String getIdClient() {
 		return idclient;
 	}
+
 	public char getStatusc() {
 		return statusc;
 	}
