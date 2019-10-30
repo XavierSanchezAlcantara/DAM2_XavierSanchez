@@ -24,14 +24,14 @@ def send_joc(message):
     a=randint(0,2)
 
     if a==0:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Empatat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Empatat")
     elif a==2:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Guanyat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Guanyat")
     else:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Perdut")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Perdut")
         pass
     
 
@@ -42,14 +42,14 @@ def send_joc1(message):
 
     a=randint(0,2)
     if a==0:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Guanyat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Guanyat")
     elif a==2:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Perdut")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Perdut")
     else:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Empatat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Empatat")
         pass
     
 
@@ -60,14 +60,14 @@ def send_joc2(message):
 
     a=randint(0,2)
     if a==0:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Perdut")
+        bot.send_message(message.chat.id, llista[a])
+        bot.reply_to(message.chat.id, "Has Perdut")
     elif a==2:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Guanyat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Guanyat")
     else:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Empatat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Empatat")
         pass
     
     pass
@@ -75,7 +75,7 @@ def send_joc2(message):
 def send_history(message):
     f2= open("historial.txt", "r")
 
-    bot.reply_to(message, f2.read())
+    bot.send_message(message.chat.id, f2.read())
     f2.close()
     pass
 
