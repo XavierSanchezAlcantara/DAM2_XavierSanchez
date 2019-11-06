@@ -14,12 +14,15 @@ bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
-    
-    print(message.chat.id)
     f = open("historial.txt", "a") 
-    
-    f.write(str(message.chat.id)+"\n")
-    f.close()
+
+    if (str(message.chat.id)) not in f:
+        print(message.chat.id)
+        f.close()
+    else:
+        f.write(str(message.chat.id)+"\n")
+        f.close()
+        pass
 
 @bot.message_handler(commands=['help'])
 def send_help(message):

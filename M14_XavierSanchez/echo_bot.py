@@ -3,6 +3,7 @@ import requests
 import json
 import os
 import sys
+import mmap
 
 from random import randint
 reload(sys)
@@ -10,16 +11,15 @@ sys.setdefaultencoding('utf-8')
 bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
 
 
-
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
-    
-    print(message.chat.id)
     f = open("historial.txt", "a") 
-    
-    f.write(str(message.chat.id)+"\n")
-    f.close()
+    with open('example.txt') as f2:
+        if message.chat.id not in f2.read():
+            f.write(str(message.chat.id)+"\n")
+        print(message.chat.id)
+ 
 
 @bot.message_handler(commands=['help'])
 def send_help(message):
