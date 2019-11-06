@@ -1,16 +1,29 @@
 import telebot
 import requests
 import json
+import os
+import sys
+
 from random import randint
-
+reload(sys)
+sys.setdefaultencoding('utf-8')
 bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
-f = open("historial.txt", "a") 
-keyboard_inici = json.dumps({'keyboard': [["play"],["Help"]], 'one_time_keyboard':True,'resize_keyboard':True})
 
-keyboard_opcions = json.dumps({'keyboard':[["Pedra"],["Paper"],["Tisora"]],'one_time_keyboard':True,'resize_keyboard':True})
+
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
+    
+    print(message.chat.id)
+    f = open("historial.txt", "a") 
+    
+    f.write(str(message.chat.id)+"\n")
+    f.close()
+
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions: /pedra, /paper, /tisora ",keyboard_opcions)
+    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions: /pedra, /paper, /tisora ")
 
 @bot.message_handler(commands=['play'])
 def send_play(message):
@@ -19,19 +32,19 @@ def send_play(message):
 
 @bot.message_handler(commands=['pedra'])
 def send_joc(message):
-    llista=['pedra','paper','tijera']
+    llista=['pedra','paper','tijera'    ]
 
     a=randint(0,2)
 
     if a==0:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Empatat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Empatat")
     elif a==2:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Guanyat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Guanyat")
     else:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Perdut")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Perdut")
         pass
     
 
@@ -42,14 +55,14 @@ def send_joc1(message):
 
     a=randint(0,2)
     if a==0:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Guanyat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Guanyat")
     elif a==2:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Perdut")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Perdut")
     else:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Empatat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Empatat")
         pass
     
 
@@ -60,14 +73,14 @@ def send_joc2(message):
 
     a=randint(0,2)
     if a==0:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Perdut")
+        bot.send_message(message.chat.id, llista[a])
+        bot.reply_to(message.chat.id, "Has Perdut")
     elif a==2:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Guanyat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Guanyat")
     else:
-        bot.reply_to(message, llista[a])
-        bot.reply_to(message, "Has Empatat")
+        bot.send_message(message.chat.id, llista[a])
+        bot.send_message(message.chat.id, "Has Empatat")
         pass
     
     pass
@@ -75,7 +88,7 @@ def send_joc2(message):
 def send_history(message):
     f2= open("historial.txt", "r")
 
-    bot.reply_to(message, f2.read())
+    bot.send_message(message.chat.id, f2.read())
     f2.close()
     pass
 
