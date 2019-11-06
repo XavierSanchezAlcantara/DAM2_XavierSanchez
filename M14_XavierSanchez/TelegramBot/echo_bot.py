@@ -1,16 +1,29 @@
 import telebot
 import requests
 import json
+import os
+import sys
+
 from random import randint
-
+reload(sys)
+sys.setdefaultencoding('utf-8')
 bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
-f = open("historial.txt", "a") 
-keyboard_inici = json.dumps({'keyboard': [["play"],["Help"]], 'one_time_keyboard':True,'resize_keyboard':True})
 
-keyboard_opcions = json.dumps({'keyboard':[["Pedra"],["Paper"],["Tisora"]],'one_time_keyboard':True,'resize_keyboard':True})
+
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
+    
+    print(message.chat.id)
+    f = open("historial.txt", "a") 
+    
+    f.write(str(message.chat.id)+"\n")
+    f.close()
+
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions: /pedra, /paper, /tisora ",keyboard_opcions)
+    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions: /pedra, /paper, /tisora ")
 
 @bot.message_handler(commands=['play'])
 def send_play(message):
@@ -19,7 +32,7 @@ def send_play(message):
 
 @bot.message_handler(commands=['pedra'])
 def send_joc(message):
-    llista=['pedra','paper','tijera']
+    llista=['pedra','paper','tijera'    ]
 
     a=randint(0,2)
 

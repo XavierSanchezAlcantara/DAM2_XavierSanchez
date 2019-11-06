@@ -1,7 +1,6 @@
 package CONTROLADOR;
 import DADES.llegirXML;
 import MODEL.Comanda;
-import MODEL.LineaComanda;
 public class Principal {
 	static int idComanda;
 	

@@ -1,6 +1,7 @@
 package DADES;
 
 import MODEL.LineaComanda;
+import MODEL.Comanda;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 public class llegirXML {
-	ArrayList<LineaComanda> liniaComanda = new ArrayList<LineaComanda>();
+	ArrayList<Comanda> Comanda = new ArrayList<Comanda>();
 	String idclient;
 	String codi;
 	int unitat;
@@ -39,6 +40,7 @@ public class llegirXML {
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
 				System.out.println("\nElement  :" + nNode.getNodeName());
+				ArrayList<LineaComanda> liniaComanda = new ArrayList<LineaComanda>();
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
@@ -56,7 +58,7 @@ public class llegirXML {
 					preuUnitari = Float
 							.parseFloat(eElement.getElementsByTagName("preuUnitat").item(0).getTextContent());
 
-					liniaComanda.add(new LineaComanda(temp + 1, 1, codi, unitat, preuUnitari, status));
+					liniaComanda.add(new LineaComanda(temp + 1/2, 1, codi, unitat, preuUnitari, status));
 
 				}
 			}
