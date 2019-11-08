@@ -24,7 +24,7 @@ public class llegirXML {
 	char statusc;
 
 	public llegirXML() {
-
+//a
 		try {
 			File inputFile = new File("comanda.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
