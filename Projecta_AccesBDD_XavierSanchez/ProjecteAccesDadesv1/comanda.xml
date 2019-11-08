@@ -1,0 +1,93 @@
+<?xml version = "1.0"?>
+<comandes>
+	<comanda idclient="aaaa" statusComanda='0'>
+
+		<article>
+
+			<codi>0001</codi>
+
+			<unitats>500</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>300</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+		<article>
+
+			<codi>0002</codi>
+
+			<unitats>200</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>400</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+		<article>
+
+			<codi>0003</codi>
+
+			<unitats>100</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>530.23</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+	</comanda>
+	<comanda idclient="bbbb" statusComanda='0'>
+
+		<article>
+
+			<codi>0003</codi>
+
+			<unitats>100</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>300</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+		<article>
+
+			<codi>0020</codi>
+
+			<unitats>50</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>400</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+		<article>
+
+			<codi>0099</codi>
+
+			<unitats>3</unitats>
+
+			<unitatsServides>0</unitatsServides>
+
+			<preuUnitat>530.23</preuUnitat>
+
+			<status>0</status>
+
+		</article>
+
+	</comanda>
+</comandes>
