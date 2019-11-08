@@ -8,7 +8,7 @@ public class Principal {
 		idComanda=1;
 		
 		llegirXML Lector1=new llegirXML();
-		Comanda Comanda1= new Comanda(idComanda,Lector1.getIdClient(),Lector1.getStatusc(), Lector1.getLinies());
+		//Comanda Comanda1= new Comanda(idComanda,Lector1.getIdClient(),Lector1.getStatusc(), Lector1.getLinies());
 		System.out.println(Comanda1.toString());
 		
 		System.out.println("Preu: "+Comanda1.getPreu()+" €");
