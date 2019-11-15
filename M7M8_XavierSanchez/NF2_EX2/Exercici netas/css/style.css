@@ -68,6 +68,16 @@ td { vertical-align: top; }
     Author: Jonathan Verrecchia
    =================================================== */
 
+/*Formulari*/
+#formulari{
+	width: 100%;
+	background: #fe57a1;
+	padding: 50px;
+	display: none;
+
+}
+
+
 body{ font:16px/24px Helvetica, Helvetica Neue, Arial, sans-serif; }
 
 .wrapper{
@@ -140,8 +150,12 @@ nav a:hover{
 /* ===============
     ALL: IE Fixes
    =============== */
+   .ie7 #title{ padding-top:20px; }
+   /*MENU DESPLEGABLE*/
+   #select{
+	
+    }
 
-.ie7 #title{ padding-top:20px; }
 
 
 /* ==|== non-semantic helper classes ======================================== */
@@ -157,6 +171,13 @@ nav a:hover{
 
 
 /* ==|== media queries ====================================================== */
+
+/*media queri formulari*/
+
+
+
+
+
 
 @media only screen and (min-width: 480px) {
 
