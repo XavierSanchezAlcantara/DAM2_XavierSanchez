@@ -22,13 +22,8 @@ $(document).ready(function () {
 
         
     });
-
-
-});
-$(document).ready(function () {
-    $("#fa fa-trash fa-lg").on("click", function () {
-        $(this.parent().parent().html(""));
-
+    $(".fa-trash").click(function () {
+        $(this).parent().parent().hide();
     });
 
 });
