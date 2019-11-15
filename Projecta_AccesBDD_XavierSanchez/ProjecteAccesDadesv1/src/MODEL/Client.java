@@ -5,27 +5,28 @@ package MODEL;
 public class Client {
 
 	String cif;
-	int idClient;
 	String nom;
 	String cognom;
 	String direccio;
 	String bankCode;
 	String telefono;
-	public Client(int idClient) {
-		this.idClient=idClient;
+	
+	public Client(String cif, String nom, String cognom, String direccio, String bankCode, String telefono) {
+		super();
+		this.cif = cif;
+		this.nom = nom;
+		this.cognom = cognom;
+		this.direccio = direccio;
+		this.bankCode = bankCode;
+		this.telefono = telefono;
 	}
-	public void setDni(String cif) {
+	public void setCif(String cif) {
 		this.cif = cif;
 	}
 	public String getCif() {
 		return cif;
 	}
-	public void setIdClient(int idClient) {
-		this.idClient = idClient;
-	}
-	public int getIdClient() {
-		return idClient;
-	}
+
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
