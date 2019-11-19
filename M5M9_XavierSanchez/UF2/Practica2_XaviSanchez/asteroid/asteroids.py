@@ -1,249 +1,253 @@
+#!/usr/bin/env python
+
+import math
+
+import pygame
+ 
+import random
+from pygame.locals import *
 
-# ! / usr / bin / env python
+
+class World(object):
+    """ contains all of our game state """
 
-matemáticas de importación
+    RENDER_OPTIONS = HWSURFACE | DOUBLEBUF | RESIZABLE
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
 
-importar pygame
+    def __init__(self, size, player):
+        # setting up the screen
+        self.size = size
+        self.surface = pygame.display.set_mode(size, self.RENDER_OPTIONS)
+        self.surface.fill(self.BLACK)
+
+        # stash the player sprite
+        self.player = player
+
+        # adding a sprite group
+        self.sprites = pygame.sprite.RenderUpdates()
+        self.sprites.add(player)
+
+        # setup our event handlers
+        self.event_handlers = {
+            VIDEORESIZE: self.handle_resize,
+            #KEYDOWN: self.handle_keydown,
+            #KEYUP: self.handle_keyup
+        }
 
-importar al azar
-de pygame.locals import  *
+    def update(self):
+        # allow any sprites to update themselves
+        self.sprites.update()
 
+        # change the sprite's location to match it's proper motion
+        for sprite in self.sprites:
+            # grab the next position the sprite should be at
+            new_center = Vector.from_position(sprite.rect.center) + sprite.motion
+            new_center = new_center.to_position()
 
-clase  mundial ( objeto ):
+            # do the screen wrap for the x and y positions
+            x = new_center[0] % self.size[0]
+            y = new_center[1] % self.size[1]
+            sprite.rect.center = (x, y)
 
-
-   RENDER_OPTIONS  =  HWSURFACE  |  DOUBLEBUF  |  RESIZABLE
-   NEGRO  = ( 0 , 0 , 0 )
-   BLANCO  = ( 255 , 255 , 255 )
-
-   def  __init__ ( auto , tamaño , jugador ):
-       # configurando la pantalla
-       self .size = tamaño
-       self .surface = pygame.display.set_mode (tamaño, self . RENDER_OPTIONS )
-       self .surface.fill ( self . NEGRO )
-
-       # esconde el sprite del jugador
-       self .player = jugador
-
-       # agregar un grupo de sprites
-       self .sprites = pygame.sprite.RenderUpdates ()
-       self .sprites.add (jugador)
-
-       # configurar nuestros controladores de eventos
-       self .event_handlers = {
-           VIDEORESIZE : self .handle_resize,
-           # KEYDOWN: self.handle_keydown,
-           # KEYUP: self.handle_keyup
-       }
-
-    actualización de def ( auto ):
-       # permitir que los sprites se actualicen
-       self .sprites.update ()
-
-       # cambia la ubicación del sprite para que coincida con su movimiento correcto
-       para sprite en  self .sprites:
-           # agarra la siguiente posición en la que debería estar el sprite
-           new_center = Vector.from_position (sprite.rect.center) + sprite.motion
-           new_center = new_center.to_position ()
-
-           # hacer el ajuste de pantalla para las posiciones x e y
-           x = new_center [ 0 ] %  self .size [ 0 ]
-           y = new_center [ 1 ] %  self .size [ 1 ]
-           sprite.rect.center = (x, y)
-
-   def  render ( self ):
-       def  clear_callback ( superficie , rect ):
-           relleno de superficie ( auto . NEGRO , rect)
-
-       self .sprites.clear ( self .surface, clear_callback)
-       updatedRects =  self .sprites.draw ( self .surface)
-       pygame.display.update (updatedRects)
-
-   def  handle_event ( self , event ):
-       handler =  self .event_handlers.get (event.type, lambda  x : None )
-       controlador (evento)
-
-   def  handle_resize ( self , event ):
-       self .size = event.dict [ ' tamaño ' ]
-       self .surface = pygame.display.set_mode ( self .size, self . RENDER_OPTIONS )
-
-
-Vector de clase ( objeto ):
-
-   def  __init__ ( self , x , y ):
-       auto .x = x
-       self .y = y
-
-    magnitud de def ( auto ):
-       return math.sqrt ( self .x *  self .x +  self .y *  self .y)
-
-   def  normalizar ( auto ):
-       return  self  /  self .magnitude ()
-
-   def  __add__ ( self , otro ):
-       x =  auto .x + otro.x
-       y =  self .y + other.y
-       Vector de retorno (x, y)
-
-   def  __sub__ ( self , otro ):
-       x =  self .x - otro.x
-       y =  self .y - other.y
-       Vector de retorno (x, y)
-
-   def  __mul__ ( self , n ):
-       x =  auto .x * n
-       y =  auto .y * n
-       Vector de retorno (x, y)
-
-   def  __div__ ( self , n ):
-       x =  auto .x / n
-       y =  auto .y / n
-       Vector de retorno (x, y)
-
-   def  __repr__ ( self ):
-       devuelve  " Vector ( {} , {} ) " .format ( self .x, self .y)
-
-   def  to_position ( self ):
-       retorno ( self .x, self .y)
-
-   def  to_radians ( self ):
-       radianes = math.atan2 ( self .x, self .y)
-       retorno (radianes, auto .magnitud ())
-
-   def  to_degrees ( self ):
-       radianes, magnitud =  self .to_radians ()
-       retorno (grados matemáticos (radianes), magnitud)
-
-   @ classmethod
-   def  from_position ( self , position ):
-       Vector de retorno (posición [ 0 ], posición [ 1 ])
-
-   @ classmethod
-   def  from_radians ( self , radianes , magnitud = 1 ):
-       Vector de retorno (math.sin (radianes), math.cos (radianes)) * magnitud
-
-   @ classmethod
-   def  from_degrees ( self , grados , magnitud = 1 ):
-       return Vector.from_radians (math.radians (grados), magnitud)
-
-
-Entidad de clase ( pygame . sprite . Sprite ):
-
-   def  __init__ ( self , imagen , posición ):
-       super (entidad, auto ). __init__ ()
-       self .image = imagen
-       self .rect =  self .image.get_rect ()
-       self .rect.center = position
-       self .motion = Vector ( 0 , 0 )
-
-Asteroide clase ( Entidad ):
-   def  __init__ ( self , position ):
-       self .orig_image = pygame.image.load ( ' recursos / asteroid.png ' )
-       super (asteroide, auto ). __init__ ( self .orig_image, posición)
-
-       x = random.randint ( - 10 , 10 )
-       y = random.randint ( - 10 , 10 )
-       self .motion = Vector (x, y)
-       auto .duration =  100
-
-    actualización de def ( auto ):
-       auto duración - =  1
-       si  auto .duration <= 0 :
-           self .kill ()
-
-
-
-Clase  Bullet ( Entidad ):
-   def  __init__ ( auto , posición , dirección , magnitud ):
-       self .orig_image = pygame.image.load ( ' recursos / bullet.png ' )
-       super (Bullet, self ). __init__ ( self .orig_image, posición)
-       self .motion = Vector.from_degrees (dirección, magnitud)
-       auto .duration =  100
-    actualización de def ( auto ):
-       auto duración - =  1
-       si  auto .duration <= 0 :
-           self .kill ()
-
-
-Clase  Jugador ( Entidad ):
-
-   def  __init__ ( self , position ):
-       self .orig_image = pygame.image.load ( ' recursos / ship.png ' )
-       super (jugador, auto ). __init__ ( self .orig_image, posición)
-       self .facing = Vector.from_degrees ( 90 )
-       self .forward =  False
-       self .backward =  False
-       self .turn_left =  False
-       self .turn_right =  False
-       self .accel =  0.15
-
-    actualización de def ( auto ):
-       # si estamos empujando, agregue el vector de nuestra cara al movimiento
-       si es  propio .
-           self .motion =  self .motion -  self .facing *  self .accel
-
-       si es  auto. hacia atrás:
-           self .motion =  self .motion +  self .facing *  self .accel
-
-       grados, _ =  self .facing.to_degrees ()
-       if  self .turn_left:
-           grados = (grados +  10 ) %  360
-
-       si  auto .turn_right:
-           grados = (grados -  10 ) %  360
-
-       self .facing = Vector.from_degrees (grados)
-
-       # rotar nuestro sprite para que coincida con nuestra dirección, y ponerlo en el lugar correcto
-       current =  self .rect.center
-       self .image = pygame.transform.rotate ( self .orig_image, grados)
-       self .rect =  self .image.get_rect ()
-       self .rect.center = current
-
-
-def  main ():
-
-
-   # setup pygame
-   pygame.init ()
-   pygame.font.init ()
-   pygame.mixer.init ()
-   pygame.display.set_caption ( " Asteroides 0.2 " )
-
-   # almacena nuestro estado del juego
-   jugador = jugador (( 400 , 300 ))
-   mundo = Mundo (( 800 , 600 ), jugador)
-   world.pew = pygame.mixer.Sound ( ' recursos / pew.wav ' )
-
-
-
-   # usa el reloj para acelerar los fps a algo razonable
-   clock = pygame.time.Clock ()
-   contador =  0
-   tiempo =  0
-   # bucle principal
-   corriendo =  verdadero
-   mientras se ejecuta:
-       tiempo + =  1
-       eventos = pygame.event.get ()
-       if (tiempo ==  10  y  len (world.sprites) <  31 ):
-           asteroide = asteroide ((random.randint ( 0 , 800 ), random.randint ( 0 , 600 )))
-           world.sprites.add (asteroide)
-           contador + =  1
-           tiempo =  0
-       # manejar nuestros eventos
-       para evento en eventos:
-           if event.type ==  QUIT :
-               corriendo =  falso
-               rotura
-
-           world.handle_event (evento)
-
-       world.update ()
-       world.render ()
-       pygame.display.flip ()
-       clock.tick ( 40 )
-
-
-if  __name__  ==  " __main__ " :
-   principal()
+    def render(self):
+        """ render the sprites to the window """
+        def clear_callback(surface, rect):
+            surface.fill(self.BLACK, rect)
+
+        self.sprites.clear(self.surface, clear_callback)
+        updatedRects = self.sprites.draw(self.surface)
+        pygame.display.update(updatedRects)
+
+    def handle_event(self, event):
+        handler = self.event_handlers.get(event.type, lambda x: None)
+        handler(event)
+
+    def handle_resize(self, event):
+        """ set the window size """
+        self.size = event.dict['size']
+        self.surface = pygame.display.set_mode(self.size, self.RENDER_OPTIONS)
+
+
+class Vector(object):
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def magnitude(self):
+        """ return the magnitude (aka: distance) this vector represents """
+        return math.sqrt(self.x * self.x + self.y * self.y)
+
+    def normalize(self):
+        """ return a unit vector """
+        return self / self.magnitude()
+
+    def __add__(self, other):
+        x = self.x + other.x
+        y = self.y + other.y
+        return Vector(x, y)
+
+    def __sub__(self, other):
+        x = self.x - other.x
+        y = self.y - other.y
+        return Vector(x, y)
+
+    def __mul__(self, n):
+        x = self.x * n
+        y = self.y * n
+        return Vector(x, y)
+
+    def __div__(self, n):
+        x = self.x / n
+        y = self.y / n
+        return Vector(x, y)
+
+    def __repr__(self):
+        return "Vector({}, {})".format(self.x, self.y)
+
+    def to_position(self):
+        return (self.x, self.y)
+
+    def to_radians(self):
+        radians = math.atan2(self.x, self.y)
+        return (radians, self.magnitude())
+
+    def to_degrees(self):
+        radians, magnitude = self.to_radians()
+        return (math.degrees(radians), magnitude)
+
+    @classmethod
+    def from_position(self, position):
+        return Vector(position[0], position[1])
+
+    @classmethod
+    def from_radians(self, radians, magnitude=1):
+        return Vector(math.sin(radians), math.cos(radians)) * magnitude
+
+    @classmethod
+    def from_degrees(self, degrees, magnitude=1):
+        return Vector.from_radians(math.radians(degrees), magnitude)
+
+
+class Entity(pygame.sprite.Sprite):
+
+    def __init__(self, image, position):
+        super(Entity, self).__init__()
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.center = position
+        self.motion = Vector(0, 0)
+
+class Asteroid(Entity):
+    def __init__(self, position):
+        self.orig_image = pygame.image.load('assets/asteroid.png')
+        super(Asteroid, self).__init__(self.orig_image, position)
+
+        x = random.randint(-10,10)
+        y = random.randint(-10,10)
+        self.motion = Vector(x,y)
+        self.duration = 100
+
+    def update(self):
+        self.duration -= 1
+        if self.duration <=0:
+            self.kill()
+            
+    
+
+class Bullet(Entity):
+    def __init__(self, position,direction,magnitude):
+        self.orig_image = pygame.image.load('assets/bullet.png')
+        super(Bullet, self).__init__(self.orig_image, position)
+        self.motion = Vector.from_degrees(direction,magnitude)
+        self.duration = 100
+    def update(self):
+        self.duration -= 1
+        if self.duration <=0:
+            self.kill()    
+       
+
+class Player(Entity):
+    """ represents the player """
+
+    def __init__(self, position):
+        self.orig_image = pygame.image.load('assets/ship.png')
+        super(Player, self).__init__(self.orig_image, position)
+        self.facing = Vector.from_degrees(90)
+        self.forward = False
+        self.backward = False
+        self.turn_left = False
+        self.turn_right = False
+        self.accel = 0.15
+
+    def update(self):
+        # if we are thrusting, add the vector of our facing to the motion
+        if self.forward:
+            self.motion = self.motion - self.facing * self.accel
+
+        if self.backward:
+            self.motion = self.motion + self.facing * self.accel
+
+        degrees, _ = self.facing.to_degrees()
+        if self.turn_left:
+            degrees = (degrees + 10) % 360
+
+        if self.turn_right:
+            degrees = (degrees - 10) % 360
+
+        self.facing = Vector.from_degrees(degrees)
+
+        # rotate our sprite to match our direction, and put it in the right place
+        current = self.rect.center
+        self.image = pygame.transform.rotate(self.orig_image, degrees)
+        self.rect = self.image.get_rect()
+        self.rect.center = current
+
+
+def main():
+    """ runs our application """
+
+    # setup pygame
+    pygame.init()
+    pygame.font.init()
+    pygame.mixer.init()
+    pygame.display.set_caption("Asteroids 0.2")
+
+    # store our game state
+    player = Player((400, 300))
+    world = World((800, 600), player)
+    world.pew = pygame.mixer.Sound('assets/pew.wav')
+   
+    
+
+    # use the clock to throttle the fps to something reasonable
+    clock = pygame.time.Clock()
+    counter = 0
+    time = 0
+    # main loop
+    running = True
+    while running:
+        time += 1
+        events = pygame.event.get()
+        if (time == 10 and len(world.sprites) < 31):
+            asteroid = Asteroid((random.randint(0,800),random.randint(0,600)))
+            world.sprites.add(asteroid)
+            counter += 1
+            time = 0
+        # handle our events
+        for event in events:
+            if event.type == QUIT:
+                running = False
+                break
+
+            world.handle_event(event)
+
+        world.update()
+        world.render()
+        pygame.display.flip()
+        clock.tick(40)
+
+
+if __name__ == "__main__":
+    main()
