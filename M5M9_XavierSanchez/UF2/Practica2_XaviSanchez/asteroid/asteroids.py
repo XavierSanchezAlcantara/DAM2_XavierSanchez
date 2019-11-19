@@ -3,7 +3,7 @@
 import math
 
 import pygame
- 
+from threading import thread
 import random
 from pygame.locals import *
 
@@ -141,7 +141,7 @@ class Entity(pygame.sprite.Sprite):
 
 class Asteroid(Entity):
     def __init__(self, position):
-        self.orig_image = pygame.image.load('assets/asteroid.png')
+        self.orig_image = pygame.image.load('recursos/asteroid.png')
         super(Asteroid, self).__init__(self.orig_image, position)
 
         x = random.randint(-10,10)
@@ -158,7 +158,7 @@ class Asteroid(Entity):
 
 class Bullet(Entity):
     def __init__(self, position,direction,magnitude):
-        self.orig_image = pygame.image.load('assets/bullet.png')
+        self.orig_image = pygame.image.load('recursos/bullet.png')
         super(Bullet, self).__init__(self.orig_image, position)
         self.motion = Vector.from_degrees(direction,magnitude)
         self.duration = 100
@@ -172,7 +172,7 @@ class Player(Entity):
     """ represents the player """
 
     def __init__(self, position):
-        self.orig_image = pygame.image.load('assets/ship.png')
+        self.orig_image = pygame.image.load('recursos/ship.png')
         super(Player, self).__init__(self.orig_image, position)
         self.facing = Vector.from_degrees(90)
         self.forward = False
@@ -217,7 +217,7 @@ def main():
     # store our game state
     player = Player((400, 300))
     world = World((800, 600), player)
-    world.pew = pygame.mixer.Sound('assets/pew.wav')
+    world.pew = pygame.mixer.Sound('recursos/pew.wav')
    
     
 
