@@ -16,11 +16,11 @@ global var1,var2
 def start(message):
     bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
     f = open("historial.txt", "r+") 
-
+ 
     if (str(message.chat.id)) not in f:
         print(message.chat.id)
         f.write(str(message.chat.id)+',0,0\n')
-        
+
         f.close()
     else:
         
