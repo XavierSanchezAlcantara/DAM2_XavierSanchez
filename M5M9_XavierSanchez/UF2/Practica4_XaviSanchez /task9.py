@@ -25,4 +25,55 @@ if __name__ == '__main__':
         print i,h[a]
         a=a+1
     print datetime.now() - start
-    p.close()
+    p
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .close()

@@ -15,16 +15,7 @@
 	<meta name="author" content="">
 
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-
 	<link rel="stylesheet" href="css/style.css">
-
-
-
-	<!--Preparacion para usar boostrap, pooper y jquery-->
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -36,73 +27,49 @@
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-	
-
-	<!--Vinculacion javascript-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<script type="text/javascript" src="js/scripts.js"></script>
-
 </head>
 
 <body>
 
 	<div id="header-container">
-		<header class="container">
-			<div class="row">
-				<h1 id="title" class= "col-md-4">h1#title</h1>
-				<p class = "col-md-4" id="visitantes"></p>
-				<nav class="col-md-4">
-					<ul>
-						<li class="boton"><a href="#">nav ul li a</a></li>
-						<li class="boton"><a href="#">nav ul li a</a></li>
-						<li class="boton"><a href="#">nav ul li a</a></li>
-					</ul>
-				</nav>
-				
-			</div>
+		<header class="wrapper clearfix">
+			<h1 id="title">h1#title</h1>
+			<nav>
+				<ul>
+					<li><a class="boton" href="#">nav ul li a</a></li>
+					<li><a class="boton" href="#">nav ul li a</a></li>
+					<li><a class="boton" href="#">nav ul li a</a></li>
+				</ul>
+			</nav>
 		</header>
 	</div>
-
-	<div id="formulari">
-
-		<div class="container">
-
-			<div class="row">
-
-				<select id="select" class="col-md-3">
-					<option value=""></option>
-
-					<option value="Principal">Principal</option>
-					<option value="Secundari">Secundari</option>
-
-				</select>
-
-				<input class="col-md-6 offset-md-2" type="text" id="titulo" placeholder="Titol...">
-
-				<textarea id="textArea" class="col-md-11" placeholder="Noticia..." rows="5"></textarea>
-				<input type="button" id="botonNoticia" class="col-md-3 offset-md-8" value="Crea notícia">
-
-			</div>
-
+	<div id="formulari" class="container">
+		<div class="row">
+			<select  id="select" class="col-md-3">
+				<option value="Selecciona">Selecciona</option>
+				<option value="Principal">Principal</option>
+				<option value="Secundari">Secundari</option>
+			</select>
+			<input id="titulo" type="text" placeholder="Titol..."class="col-md-6 offset-md-2 " id="input" placeholder="Titol...">
+			<textarea  id="textArea" placeholder="Noticia..." rows="3"></textarea>
+			<input type="button" id="botonNoticia"value="Crear noticia">
 		</div>
-
 	</div>
-
-
-
 	<div id="main-container">
 		<div id="main" class="wrapper clearfix">
 
 			<section>
 				<article>
-					<h2>section article 3</h2><button class= 'fa fa-trash fa-lg'></button>
+					<h2>section article 3<button class="fa fa-trash fa-lg"></button></h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas
 						tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in.
 						In semper consequat est, eu porta velit mollis nec.</p>
 				</article>
 				<article>
-					<h2>section article 2</h2><button class= 'fa fa-trash fa-lg'></button>
+					<h2>section article 2<button class="fa fa-trash fa-lg"></button></h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas
 						tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in.
 						In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat
@@ -110,7 +77,7 @@
 						pharetra.</p>
 				</article>
 				<article>
-					<h2>section article 1</h2><button class= 'fa fa-trash fa-lg'></button>
+					<h2>section article 1<button class="fa fa-trash fa-lg"></button></h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas
 						tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in.
 						In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat
@@ -122,7 +89,7 @@
 
 			<aside>
 				<article>
-					<h3>aside article 1</h3><button class= 'fa fa-trash fa-lg'></button>
+					<h3>aside article 1<button class="fa fa-trash fa-lg"></button></h3>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas
 						tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in.
 						In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat
