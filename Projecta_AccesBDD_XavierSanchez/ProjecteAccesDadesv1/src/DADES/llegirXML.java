@@ -84,7 +84,7 @@ public class llegirXML {
 					}
 					idComanda = tempo + 1;
 					
-				//	System.out.println(eElement2.getAttribute("idclient"));
+					//System.out.println(eElement2.getAttribute("idclient"));
 					//System.out.println(eElement2.getAttribute("statusComanda"));
 					idclient = eElement2.getAttribute("idclient");
 					

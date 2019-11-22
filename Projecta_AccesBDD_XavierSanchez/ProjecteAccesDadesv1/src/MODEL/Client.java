@@ -57,4 +57,9 @@ public class Client {
 	public String getTelefono() {
 		return telefono;
 	}
+	@Override
+	public String toString() {
+		return "Client [cif=" + cif + ", nom=" + nom + ", cognom=" + cognom + ", direccio=" + direccio + ", bankCode="
+				+ bankCode + ", telefono=" + telefono + "]";
+	}
 }

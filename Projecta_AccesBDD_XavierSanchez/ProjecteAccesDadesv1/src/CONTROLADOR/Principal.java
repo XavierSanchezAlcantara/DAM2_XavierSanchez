@@ -17,10 +17,11 @@ public class Principal {
 		SQLClients conector= new SQLClients();
 		conector.conectar();
 		conector.insertaClients(new Client("2622521472D","sada","Calabró","tierra 32","57584","478569852"));
-
+		conector.consultaClients("Clients");
+		conector.editarClient("2622521472D","nom","PENELOPEasd");
+		conector.eliminarClient("2622521472D");
 		
-		
-		System.out.println("--------------------------------------------------------------------------------------------");
+		//System.out.println("--------------------------------------------------------------------------------------------");
 	//	System.out.println(Lector1.comandes.toString()+"\n");
 		System.out.println("--------------------------------------------------------------------------------------------");
 	//	System.out.println(Comanda.getLineasComanda());
