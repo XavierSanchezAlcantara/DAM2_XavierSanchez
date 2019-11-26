@@ -1,85 +1,61 @@
-$(document).ready(function(){
-    $(".boton").click(function(){
-        $("#formulari").slideToggle();
-        
-       
-     });
-
-    
-    //var newsArray = JSON.parse(localStorage.getItem('myArray'))
-
-    if(localStorage.myArray){
-        var newsArray = JSON.parse(localStorage.getItem('myArray'));
-    }else {
-        var newsArray = [];
+$(function () {
+    var num;
+    var newsArray = JSON.parse(localStorage.getItem('news'));
+    //printar noticias
+    if (JSON.parse(localStorage.getItem('news')) != null) {
+        for (var i = 0; i < newsArray.length; i++) {
+            var noticia = "<article> <h2>" + newsArray[i].title + " <img  class=\"imag\" width=\"20\" height=\"20\" src=\"imagenes/papelera.png\"/></h2><p>" + newsArray[i].date + "h.<br>" + newsArray[i].content + "</p>";
+            if (newsArray[i].seccion == "Principal") {
+                $("section").prepend(noticia);
+            } else { $("aside").prepend(noticia); }
+        }
+    } else {
+        var newsArray = new Array();
     }
+    //mostrar papelera
+    $("ul li:first").click(function () {
+        $("#formulari").slideToggle("slow");
+    });
+    //insertar noticia
 
+    $("div button").click(function () {
+        if ($("div input").val().length > 0 && $("div textarea").val().length > 0) {
+            var news = new Object();
+            var d = new Date();
 
+            news.title = $("div input").val();
+            news.content = $("div textarea").val();
+            news.seccion = $("div select").val();
+            news.date = d;
 
-    for (var i = 0; i <= newsArray.length; i++){
+            newsArray.push(news);
+            localStorage.setItem('news', JSON.stringify(newsArray));
 
-        $(newsArray[i].noticia.n).prepend(newsArray[i].noticia.a);
-
-    }
-
-    $("#botonNoticia").click(function(){
-        
-        var d = new Date();
-        //var newsArray = [$("#titulo").val(),$("#textArea").val()];
-        var noticia=new Object();
-        if ($('#select').val()=="Secundari"){
-
-            $("section").prepend("<article>"+"<h2>"+$("#titulo").val()+"<button class= 'fa fa-trash fa-lg'></button></h2><p>"+$("#textArea").val()+"</p>"+d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear()+"</article>");
-            noticia.n= $("section")
-            noticia.a="<article>"+"<h2>"+$("#titulo").val()+"<button class= 'fa fa-trash fa-lg'></button></h2><p>"+$("#textArea").val()+"</p>"+d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear()+"</article>"
-            newsArray.push(noticia);
-        }else if ($('#select').val() == "Principal"){
-            $("aside").prepend("<article>"+"<h3>"+$("#titulo").val()+"<button class= 'fa fa-trash fa-lg'></button></h3><p>"+$("#textArea").val()+"</p>"+d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear()+"</article>");
-            noticia.n= '$("aside")'
-            noticia.a="<article>"+"<h2>"+$("#titulo").val()+"<button class= 'fa fa-trash fa-lg'></button></h2><p>"+$("#textArea").val()+"</p>"+d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear()+"</article>"
-            newsArray.push($("aside"),$(""));
-        }else{
-            alert("Introdueix valors vàlids!")
+            var noticia = "<article><h2>" + $("div input").val() + " <img  class=\"imag\" width=\"20\" height=\"20\" src=\"imagenes/papelera.png\"/></h2><p>" + d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear() + ", " + d.getHours() + ":" + d.getMinutes() + "h.<br>" + $("div textarea").val() + "</p>";
+            if ($("div select").val() == "Principal") {
+                $("section").prepend(noticia);
+            } else { $("aside").prepend(noticia); }
         }
 
-        //array localStorage
+        $(".imag").click(function () {
+            $(this).parent().parent().hide();
+        });
 
-        localStorage.setItem('myArray',JSON.stringify(newsArray));
-        newsArray = localStorage.getItem('myArray');
+    });
 
-        newsArray = JSON.parse(newsArray);
-    
-        
-     });
-
-
-    $(".fa fa-trash").click(function(){
-        // alert("hola");
-        $(this).parent().parent().hide();
-         
+    $("ul li:nth-child(2)").click(function () {
+        $(".imag").toggle();
         
     });
- 
-    //LOCAL STORAGE
- 
-    var numVisites;
-    
- 
-    if(localStorage.numVisites){
-        localStorage.numVisites = Number(localStorage.numVisites)+1;
-    }else {
-        localStorage.numVisites = 1;
-    }
-    $("#visitantes").html("visitant numero: "+JSON.parse(localStorage.numVisites));
 
+    $(".imag").click(function () {
+        $(this).parent().parent().hide();
+    });
+    // visites
+    if (localStorage.numvisites) {
+        localStorage.numvisites = Number(localStorage.numvisites) + 1;
+    } else { localStorage.numvisites = 1 }
+    num = JSON.stringify(localStorage.numvisites)
+    $("#numvisites").html("visites:" + num);
 
-    //array noticias
-
-   
-   
-    
-
-    
-    
 });
-
