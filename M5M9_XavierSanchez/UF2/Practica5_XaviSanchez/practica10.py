@@ -33,8 +33,8 @@ class World(object):
         # setup our event handlers
         self.event_handlers = {
             VIDEORESIZE: self.handle_resize,
-            #KEYDOWN: self.handle_keydown,
-            #KEYUP: self.handle_keyup
+            KEYDOWN: self.handle_keydown,
+            KEYUP: self.handle_keyup
         }
 
     def update(self):
