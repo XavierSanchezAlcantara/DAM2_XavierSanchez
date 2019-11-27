@@ -16,11 +16,11 @@ global var1,var2
 def start(message):
     bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
     f = open("historial.txt", "r+") 
- 
-    if (str(message.chat.id)) not in f:
+    f.seek(0)
+    if (str(message.chat.id)) not in f.read():
         print(message.chat.id)
-        f.write(str(message.chat.id)+',0,0\n')
-
+        f.write(str(message.chat.id)+' 0 0\n')
+        print f
         f.close()
     else:
         
@@ -40,7 +40,7 @@ def send_play(message):
 
 @bot.message_handler(commands=['pedra'])
 def send_joc(message):
-    llista=['pedra','paper','tijera'    ]
+    llista=['pedra','paper','tijera']
 
     a=randint(0,2)
 
@@ -50,12 +50,16 @@ def send_joc(message):
     elif a==2:
         bot.send_message(message.chat.id, llista[a])
         bot.send_message(message.chat.id, "Has Guanyat")
+        print 'win'
         win(message.chat.id)
+        
 
     else:
         bot.send_message(message.chat.id, llista[a])
         bot.send_message(message.chat.id, "Has Perdut")
+        print 'lose'
         lose(message.chat.id)
+        
         pass
     
 
@@ -118,22 +122,34 @@ def fitxer_en_us():
         print()
 """
 def win(usuari):
-    fr= open("historial.txt","r+")
+    fr= open("./historial.txt","r+")
+    fr.seek(0)
     for x in fr.readlines() :
-        l=fr.readline()
-        if (str(usuari))  in l:
-            var1=int(l.split(",")[1])
-            var1+=1 
-        fr.write(str(usuari)+","+str(var1)+",0\n")
-    fr.close()
+        print x
+        if (str(usuari)) in x:
+            lose = int(x.split(' ')[2])
+            print fr.tell()
+            fr.write(str(usuari)+' '+x.split(' ')[1]+' '+str(lose+1)+'\n')
+            break
+    fr.close()  
 def lose(usuari):
-    fr= open("historial.txt","r+")
+    print 'dins lose'
+    fr= open("./historial.txt","r+")
+    fr.seek(0)
+    rt = fr.read()
+    pos = rt.find(str(usuari))
+    pos2 = rt.find('\n')
+    print pos+len(str(usuari)), pos2
+    print rt[:13]
+    new = rt[13:]
     for x in fr.readlines() :
-        l=fr.readline()
-        if (str(usuari))  in l:
-            var2=int(l.split(",")[2])
-            var2+=1
-    fr.write(str(usuari)+','+str(var2)+',0\n')
+        print x
+        if (str(usuari)) in x:
+            lose = int(x.split(' ')[2])
+            print fr.tell()
+            str(usuari).replace(x.split(' ')[1],2)
+            fr.write(str(usuari)+' '+x.split(' ')[1]+' '+str(lose+1)+'\n')
+            break
     fr.close()  
 
 bot.polling()

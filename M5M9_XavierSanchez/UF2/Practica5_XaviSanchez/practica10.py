@@ -36,7 +36,30 @@ class World(object):
             KEYDOWN: self.handle_keydown,
             KEYUP: self.handle_keyup
         }
+     def handle_keydown(self,event):
+        if event.key == pygame.K_LEFT:
+            self.player.turn_left = True
+            print('esquerra')
+        if event.key == pygame.K_RIGHT:
+            self.player.turn_right = True
+            print('dreta')
+        if event.key == pygame.K_UP:
+            self.player.forward = True
+            print('endavant')
 
+    def handle_keyup(self,event):
+        if event.key == pygame.K_LEFT:
+            self.player.turn_left = False
+            print('esquerra stop')
+        if event.key == pygame.K_RIGHT:
+            self.player.turn_right = False
+            print('dreta stop')
+        if event.key == pygame.K_UP:
+            self.player.forward = False
+            print('endavant stop')
+        if event.key == pygame.K_SPACE:
+            print('pew')
+            bullet = Bullet((20,30),20.0,20)
     def update(self):
         # allow any sprites to update themselves
         self.sprites.update()
