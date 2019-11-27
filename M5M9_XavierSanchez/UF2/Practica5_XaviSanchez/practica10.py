@@ -36,30 +36,35 @@ class World(object):
             KEYDOWN: self.handle_keydown,
             KEYUP: self.handle_keyup
         }
-     def handle_keydown(self,event):
+
+    def handle_keydown(self,event):
         if event.key == pygame.K_LEFT:
             self.player.turn_left = True
-            print('esquerra')
         if event.key == pygame.K_RIGHT:
             self.player.turn_right = True
-            print('dreta')
         if event.key == pygame.K_UP:
             self.player.forward = True
-            print('endavant')
+        if event.key == pygame.K_DOWN:
+            self.player.backward=True
 
     def handle_keyup(self,event):
         if event.key == pygame.K_LEFT:
             self.player.turn_left = False
-            print('esquerra stop')
         if event.key == pygame.K_RIGHT:
             self.player.turn_right = False
-            print('dreta stop')
         if event.key == pygame.K_UP:
             self.player.forward = False
-            print('endavant stop')
+        if event.key == pygame.K_DOWN:
+            self.player.backward=False
         if event.key == pygame.K_SPACE:
-            print('pew')
-            bullet = Bullet((20,30),20.0,20)
+            position = (Vector(*world.player.rect.center)-world.player.facing*2).to_position()
+            direction = world.player.facing.to_degrees()[0]
+            magnitude = world.player.motion.magnitude()-10
+
+            
+            bullet = Bullet(position,direction,magnitude)
+            world.sprites.add(bullet)
+
     def update(self):
         # allow any sprites to update themselves
         self.sprites.update()
@@ -279,16 +284,6 @@ def main():
 
             world.handle_event(event)
 
-        '''
-        if len(world.sprites) < 30:
-            asteroid = Asteroid((random.randint(0, 800), random.randint(0,600)))
-            world.sprites.add(asteroid)
-
-
-        world.update()
-        world.render()
-        pygame.display.flip()
-        '''
         clock.tick(40)
         #supdate.join()
 
