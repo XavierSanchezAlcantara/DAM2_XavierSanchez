@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 import md5, random, sys
 from multiprocessing import Process, Semaphore
-
+s=Semaphore(1)
 def busca(x):
     f = open('fitxer.txt', 'r')
     fr = f.read()
@@ -11,6 +11,7 @@ def busca(x):
     f.close()
 
 def substitueix(x):
+    s.acquire()
     f = open('fitxer.txt', 'r')
     fr = f.read()
     f.close()
@@ -24,6 +25,7 @@ def substitueix(x):
     f.write(str(100)+ ',' + md5.md5(str(100)).hexdigest()+ "\n")
     f.write(fr[index2+1:])
     f.close()
+    s.release()
     busca('100')
 
 def inici():
@@ -37,5 +39,14 @@ if __name__ == '__main__' :
 
     inici()
     l = ['4','10','60']
-    for i in l:
-        substitueix(i)
+    #for i in l:
+      #  substitueix(i)
+    p1=Process(target=substitueix,args=["4",])
+    p2=Process(target=substitueix,args=["10",])
+    p3=Process(target=substitueix,args=["60",])
+    p1.start()
+    p1.join()
+    p2.start()
+    p2.join()
+    p3.start()
+    p3.join()
