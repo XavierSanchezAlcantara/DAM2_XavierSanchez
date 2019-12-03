@@ -64,7 +64,7 @@ class World(object):
             
             bullet = Bullet(position,direction,magnitude)
             world.sprites.add(bullet)
-
+ 
     def update(self):
         # allow any sprites to update themselves
         self.sprites.update()
