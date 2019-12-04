@@ -3,15 +3,16 @@ import requests
 import json
 import os
 import sys
+from multiprocessing import Process, Semaphore
 
 from random import randint
 reload(sys)
 sys.setdefaultencoding('utf-8')
 fitxer_no_us=True
 bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
+s=Semaphore(1)
 
-
-global var1,var2  
+ 
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
@@ -40,7 +41,7 @@ def send_play(message):
 
 @bot.message_handler(commands=['pedra'])
 def send_joc(message):
-    llista=['pedra','paper','tijera']
+    llista=['pedra','paper','tisora']
 
     a=randint(0,2)
 
@@ -50,23 +51,18 @@ def send_joc(message):
     elif a==2:
         bot.send_message(message.chat.id, llista[a])
         bot.send_message(message.chat.id, "Has Guanyat")
-        print 'win'
         win(message.chat.id)
-        
-
     else:
         bot.send_message(message.chat.id, llista[a])
         bot.send_message(message.chat.id, "Has Perdut")
-        print 'lose'
         lose(message.chat.id)
-        
         pass
     
 
     pass
 @bot.message_handler(commands=['paper'])
 def send_joc1(message):
-    llista=['pedra','paper','tijera']
+    llista=['pedra','paper','tisora']
 
     a=randint(0,2)
     if a==0:
@@ -84,16 +80,16 @@ def send_joc1(message):
     
 
     pass
-@bot.message_handler(commands=['tijera'])
+@bot.message_handler(commands=['tisora'])
 def send_joc2(message):
-    llista=['pedra','paper','tijera']
+    llista=['pedra','paper','tisora']
 
     a=randint(0,2)
     if a==0:
         bot.send_message(message.chat.id, llista[a])
-        bot.reply_to(message.chat.id, "Has Perdut")
+        bot.send_message(message.chat.id, "Has Perdut")
         lose(message.chat.id)
-    elif a==2:
+    elif a==1:
         bot.send_message(message.chat.id, llista[a])
         bot.send_message(message.chat.id, "Has Guanyat")
         win(message.chat.id)
@@ -121,35 +117,47 @@ def fitxer_en_us():
     else:
         print()
 """
-def win(usuari):
-    fr= open("./historial.txt","r+")
-    fr.seek(0)
-    for x in fr.readlines() :
-        print x
-        if (str(usuari)) in x:
-            lose = int(x.split(' ')[2])
-            print fr.tell()
-            fr.write(str(usuari)+' '+x.split(' ')[1]+' '+str(lose+1)+'\n')
-            break
-    fr.close()  
-def lose(usuari):
-    print 'dins lose'
-    fr= open("./historial.txt","r+")
-    fr.seek(0)
-    rt = fr.read()
-    pos = rt.find(str(usuari))
-    pos2 = rt.find('\n')
-    print pos+len(str(usuari)), pos2
-    print rt[:13]
-    new = rt[13:]
-    for x in fr.readlines() :
-        print x
-        if (str(usuari)) in x:
-            lose = int(x.split(' ')[2])
-            print fr.tell()
-            str(usuari).replace(x.split(' ')[1],2)
-            fr.write(str(usuari)+' '+x.split(' ')[1]+' '+str(lose+1)+'\n')
-            break
-    fr.close()  
 
+def win(usuari):
+    s.acquire()
+
+    f = open('historial.txt', 'r')
+    fr = f.read()
+    f.close()
+    print usuari
+    index = fr.find(str(usuari))
+    index2 = fr.find('\n', index+1)
+    text=fr[index:index2].split(" ")
+    print text
+    victoria=int(text[1])
+    derrota=int(text[2])
+    victoria=victoria+1
+    print fr[index:index2]
+    f = open('historial.txt', 'w')
+    f.write(fr[:index])
+    f.write(str(usuari)+ ' '+str(victoria)+' '+str(derrota)+'\n')
+    f.write(fr[index2+1:])
+    f.close()
+    s.release()
+def lose(usuari):
+    s.acquire()
+    f = open('historial.txt', 'r')
+    fr = f.read()
+    f.close()
+    print usuari
+    index = fr.find(str(usuari))
+    index2 = fr.find('\n', index+1)
+    text=fr[index:index2].split(" ")
+    print text
+    victoria=int(text[1])
+    derrota=int(text[2])
+    derrota=derrota+1
+    print fr[index:index2]
+    print str(usuari)+ ' '+str(victoria)+' '+str(derrota)
+    f = open('historial.txt', 'w')
+    f.write(fr[:index])
+    f.write(str(usuari)+ ' '+str(victoria)+' '+str(derrota)+'\n')
+    f.write(fr[index2+1:])
+    f.close()
+    s.release()
 bot.polling()
