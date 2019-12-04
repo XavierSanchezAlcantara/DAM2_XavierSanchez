@@ -8,15 +8,17 @@ from pygame.locals import *
 import random, time
 from datetime import datetime
 from multiprocessing import Process, Queue
-from threading import Thread
-
+from threading import Thread,Semaphore
+s=Semaphore(1)
+    
 class World(object):
     """ contains all of our game state """
+    
 
     RENDER_OPTIONS = HWSURFACE | DOUBLEBUF | RESIZABLE
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
-
+    RED = (255,0,0)
     def __init__(self, size, player):
         # setting up the screen
         self.size = size
@@ -64,7 +66,8 @@ class World(object):
             
             bullet = Bullet(position,direction,magnitude)
             world.sprites.add(bullet)
- 
+
+
     def update(self):
         # allow any sprites to update themselves
         self.sprites.update()
@@ -245,8 +248,10 @@ def update_s():
             world.sprites.add(asteroid)
             i = 0
         i += 1
+        updateColision()
         world.update()
         world.render()
+    
         pygame.display.flip()
         clock.tick(40)
     #print 'acaba'
@@ -265,6 +270,29 @@ world.pew = pygame.mixer.Sound('assets/pew.wav')
 world.running = True
 # use the clock to throttle the fps to something reasonable
 clock = pygame.time.Clock()
+def colisioNau():
+    for i in [x for x in world.sprites if isinstance(x,Asteroid)]:
+        if abs(i.rect.center[0]-world.player.rect.center[0])<15:
+            if abs(i.rect.center[1]-world.player.rect.center[1])<15:
+                i.duration=0
+                world.surface.fill(world.RED)
+                world.running=False
+                world.render()
+                pygame.display.flip()
+                time.sleep(5)
+                print("mort")
+def colisioBalas():
+    for i in [x for x in world.sprites if isinstance(x,Asteroid)]:
+        for l in [x for x in world.sprites if isinstance(x,Bullet)]:
+            if abs(i.rect.center[0]-l.rect.center[0])<15:
+                if abs(i.rect.center[1]-l.rect.center[1]<15):
+                    i.duration=0
+                    l.duration=0
+                    print "tocado"
+
+def updateColision():
+    colisioNau()
+    colisioBalas()
 
 def main():
     """ runs our application """
@@ -273,7 +301,7 @@ def main():
     supdate = Thread(target=update_s)
     supdate.start()
     while world.running:
-
+        
         events = pygame.event.get()
 
         # handle our events
