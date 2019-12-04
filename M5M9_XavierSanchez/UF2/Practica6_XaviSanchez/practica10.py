@@ -291,8 +291,12 @@ def colisioBalas():
                     print "tocado"
 
 def updateColision():
-    colisioNau()
-    colisioBalas()
+    while world.running:
+        s.acquire()
+        colisioNau()
+        colisioBalas()
+        s.release()
+        clock.tick(60)
 
 def main():
     """ runs our application """
@@ -300,6 +304,8 @@ def main():
     # main loop
     supdate = Thread(target=update_s)
     supdate.start()
+    processColisio=Thread(target=updateColision)
+    processColisio.start()
     while world.running:
         
         events = pygame.event.get()
