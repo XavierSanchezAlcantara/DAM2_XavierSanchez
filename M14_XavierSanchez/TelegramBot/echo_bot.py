@@ -3,19 +3,20 @@ import requests
 import json
 import os
 import sys
-from multiprocessing import Process, Semaphore
-
+from threading import Semaphore
 from random import randint
 reload(sys)
 sys.setdefaultencoding('utf-8')
 fitxer_no_us=True
 bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
 s=Semaphore(1)
-
+json_keyboard_start=json.dumps({'keyboard':[["Start"],["Help"]],'one_time_keyboard':True, 'resize_keyboard':True})
+json_keyboard=json.dumps({'keyboard':[["/play"],["/historial"],["/help"]],'one_time_keyboard':False, 'resize_keyboard':True})
+json_keyboard_jugar=json.dumps({'keyboard':[["/pedra"],["/paper"],["/tisora"]],'one_time_keyboard':True, 'resize_keyboard':True})
  
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions:  /play, /help ")
+    bot.reply_to(message,"Empieza el juego \n Pedra,Paper,Tisora",reply_markup=json_keyboard)
     f = open("historial.txt", "r+") 
     f.seek(0)
     if (str(message.chat.id)) not in f.read():
@@ -37,7 +38,7 @@ def send_help(message):
 @bot.message_handler(commands=['play'])
 def send_play(message):
     bot.reply_to(message, "Selecciona una de les opcions")
-    bot.reply_to(message, "Pedra= /pedra, Paper= /paper, Tisora= /tisor")
+    bot.reply_to(message, "Pedra=/pedra, Paper= /paper, Tisora= /tisora",reply_markup=json_keyboard_jugar)
 
 @bot.message_handler(commands=['pedra'])
 def send_joc(message):
@@ -47,14 +48,14 @@ def send_joc(message):
 
     if a==0:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Empatat")
+        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard)
     elif a==2:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Guanyat")
+        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard)
         win(message.chat.id)
     else:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Perdut")
+        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard)
         lose(message.chat.id)
         pass
     
@@ -67,15 +68,15 @@ def send_joc1(message):
     a=randint(0,2)
     if a==0:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Guanyat")
+        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard)
         win(message.chat.id)
     elif a==2:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Perdut")
+        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard)
         lose(message.chat.id)
     else:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Empatat")
+        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard)
         pass
     
 
@@ -87,15 +88,15 @@ def send_joc2(message):
     a=randint(0,2)
     if a==0:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Perdut")
+        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard)
         lose(message.chat.id)
     elif a==1:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Guanyat")
+        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard)
         win(message.chat.id)
     else:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Empatat")
+        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard)
         pass
     
     pass
@@ -104,8 +105,14 @@ def send_joc2(message):
 def send_history(message):
     f2= open("historial.txt", "r")
 
-    bot.send_message(message.chat.id, f2.read())
+    fr=f2.read()
     f2.close()
+    index=fr.find(str(message.chat.id))
+    index2=fr.find('\n',index+1)
+    text=fr[index:index2].split(" ")
+    victoria=text[1]
+    derrota=text[2]
+    bot.send_message(message.chat.id, "Victories = "+victoria+" Derrota = "+derrota)
     pass
 
 """
