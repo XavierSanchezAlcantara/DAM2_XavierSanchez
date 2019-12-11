@@ -5,6 +5,7 @@ import os
 import sys
 from threading import Semaphore
 from random import randint
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 fitxer_no_us=True
@@ -12,11 +13,11 @@ bot = telebot.TeleBot("940457893:AAH6J8fRSRMrMlMbm5zbYdjeliz51dAK944")
 s=Semaphore(1)
 json_keyboard_start=json.dumps({'keyboard':[["Start"],["Help"]],'one_time_keyboard':True, 'resize_keyboard':True})
 json_keyboard=json.dumps({'keyboard':[["/play"],["/historial"],["/help"]],'one_time_keyboard':False, 'resize_keyboard':True})
-json_keyboard_jugar=json.dumps({'keyboard':[["/pedra"],["/paper"],["/tisora"]],'one_time_keyboard':True, 'resize_keyboard':True})
+json_keyboard_jugar=json.dumps({'keyboard':[["/pedra"],["/paper"],["/tisora"],["/enrere"]],'one_time_keyboard':False, 'resize_keyboard':True})
  
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.reply_to(message,"Empieza el juego \n Pedra,Paper,Tisora",reply_markup=json_keyboard)
+    bot.reply_to(message,"Empieza el juego \n Pedra,Paper,Tisora \n Que vols fer: jugar? \n Veure el historial? \n O necessites ajuda?",reply_markup=json_keyboard)
     f = open("historial.txt", "r+") 
     f.seek(0)
     if (str(message.chat.id)) not in f.read():
@@ -35,6 +36,9 @@ def start(message):
 def send_help(message):
     bot.reply_to(message, "Tens que seleccionar una d'aquestes tres opcions: /pedra, /paper, /tisora ")
 
+@bot.message_handler(commands=['enrere'])
+def enrere(message):
+    bot.reply_to(message,"hola",reply_markup=json_keyboard)
 @bot.message_handler(commands=['play'])
 def send_play(message):
     bot.reply_to(message, "Selecciona una de les opcions")
@@ -48,14 +52,14 @@ def send_joc(message):
 
     if a==0:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard_jugar)
     elif a==2:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard_jugar)
         win(message.chat.id)
     else:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard_jugar)
         lose(message.chat.id)
         pass
     
@@ -68,15 +72,15 @@ def send_joc1(message):
     a=randint(0,2)
     if a==0:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard_jugar)
         win(message.chat.id)
     elif a==2:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard_jugar)
         lose(message.chat.id)
     else:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard_jugar)
         pass
     
 
@@ -88,15 +92,15 @@ def send_joc2(message):
     a=randint(0,2)
     if a==0:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Perdut",reply_markup=json_keyboard_jugar)
         lose(message.chat.id)
     elif a==1:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Guanyat",reply_markup=json_keyboard_jugar)
         win(message.chat.id)
     else:
         bot.send_message(message.chat.id, llista[a])
-        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard)
+        bot.send_message(message.chat.id, "Has Empatat",reply_markup=json_keyboard_jugar)
         pass
     
     pass
@@ -167,4 +171,5 @@ def lose(usuari):
     f.write(fr[index2+1:])
     f.close()
     s.release()
+@bot.message_handler(lambda):
 bot.polling()
