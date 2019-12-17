@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 import md5, random, sys, time
 from multiprocessing import Process, Semaphore, Pipe
-
 def busca(x, s):
     s.acquire()
     f = open('fitxer.txt', 'r')
@@ -40,10 +39,47 @@ def inici():
     f = open('fitxer.txt', 'w')
     for i in range(100):
         f.write(str(i)+ ',' + md5.md5(str(i)).hexdigest()+ "\n")
+
     f.close()
     #print open('fitxer.txt', 'ro').read()
 
 
-if __name__ == '__main__' :
+def fill(s,p):
+    while True:
+        s1=b.recv()
+        s2=b.recv()
+        print "entro2"
+        substitueix(s1,s2,s)
+        if s1=="q" or s2=="q":
+            print "close"
+            break
 
+if __name__ == '__main__' :
     inici()
+    s=Semaphore()
+    a,b= Pipe()
+
+    p = Process(target=fill,args=(s,a))
+    p.start()
+
+    while True:
+        
+        num=raw_input("Introdueix un numero: ")
+        num2=raw_input("introduiex un numero: ")
+
+        print num
+        a.send(num)
+       
+           
+        
+        print num2
+        a.send(num2)
+        if num2=="q" or num=="q":
+            print "close"
+            break   
+        time.sleep(1)
+    p.join()
+    
+    
+    
+    
