@@ -1,47 +1,69 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DollarDuck</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel=”stylesheet” type=”text/css” href=”css/dollar.css”>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="dollar.js"></script>
-    
-</head>
-<body style="background-color: #424745;">
-    <header id="main-header">
-        <nav>
-            <div class="nav-wrapper">
-              <a href="#!" class="brand-logo center">Logo</a>
-              <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-              <ul class="left">
-                <li><a class="fa fa-user">Perfil</a></li>
-                <li><a class="fa fa-gamepad">Minijuegos</a></li>
-                <li><a class="fa fa-credit-card">Fondos</a></li>
-                <li><a class="fa fa-phone">Contacto</a></li>
-                <li><a class="fa fa-envelope">Mensajes</a></li>
-                <li><a class="fa fa-cog">Ajustes</a></li>
-                <li><a class="fa fa-globe">Redes sociales</a></li>
-              </ul>
-            </div>
-          </nav>
-        
-          <ul class="sidenav" id="mobile-demo">
-            <li><a class="fa fa-user">Perfil</a></li>
-            <li><a class="fa fa-gamepad">Minijuegos</a></li>
-            <li><a class="fa fa-credit-card">Fondos</a></li>
-            <li><a class="fa fa-phone">Contacto</a></li>
-            <li><a class="fa fa-envelope">Mensajes</a></li>
-            <li><a class="fa fa-cog">Ajustes</a></li>
-            <li><a class="fa fa-globe">Redes sociales</a></li>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>DollarDuck</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/dollar.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="dollar.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body style="background-color: #424745;">
+  <div id="header-container" class="container-fluid">
+    <div class="row">
+      
+      <div class="nav-side-menu" class="col-12  offset-1 col-md-5 offset-md-1">
+        <div class="brand"><img src="img/logo.png" alt=""></div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+        <div class="menu-list">
+
+          <ul id="menu-content" class="menu-content collapse out">
+            <li>
+              <a href="#">
+                <i class="fa fa-dashboard fa-lg"></i> DollarDuck
+              </a>
+            </li>
+
+
+            <li data-toggle="collapse" data-target="#service" class="collapsed">
+              <a href="#"><i class="fa fa-globe fa-lg"></i> Minijuegos <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="service">
+              <li>CoinFlip</li>
+              <li>Jackpot</li>
+              <li>Ruleta</li>
+            </ul>
+
+
+            <li>
+              <a href="#"><i class="fa fa-user fa-lg"></i> Fondos</a>
+            </li>
+
+            <li>
+              <a href="#"><i class="fa fa-users fa-lg"></i> Contacto</a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-users fa-lg"></i> Redes Sociales</a>
+            </li>
           </ul>
-    </header>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>

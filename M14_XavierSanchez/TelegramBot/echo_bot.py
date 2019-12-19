@@ -105,6 +105,7 @@ def send_joc2(message):
     
     pass
 
+"""
 @bot.message_handler(commands=['historial'])
 def send_history(message):
     f2= open("historial.txt", "r")
@@ -118,13 +119,12 @@ def send_history(message):
     derrota=text[2]
     bot.send_message(message.chat.id, "Victories = "+victoria+" Derrota = "+derrota)
     pass
-
+"""
 """
 def fitxer_en_us():
     if fitxer_no_us:
         fitxer_no_us=False
         fitxer_no_us=True
-
     else:
         print()
 """
@@ -171,5 +171,4 @@ def lose(usuari):
     f.write(fr[index2+1:])
     f.close()
     s.release()
-@bot.message_handler(lambda):
 bot.polling()
