@@ -21,13 +21,13 @@ if __name__ == "__main__":
     s.bind((HOST,PORT))
     s.listen(1)
     conn,addr = s.accept()
-    data=""
+    data =raw_input()
     fil = threading.Thread(target = enviar, args=(conn,data))
     fil2 = threading.Thread(target = rebre, args=(conn,))
     fil.start()
     fil2.start()
     while True:
-        data =raw_input()
+        
         
         fil.join()
         fil2.join()
