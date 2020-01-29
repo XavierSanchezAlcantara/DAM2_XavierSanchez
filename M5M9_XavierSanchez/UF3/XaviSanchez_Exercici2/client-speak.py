@@ -2,36 +2,38 @@
 import socket
 import time
 import threading
-def rebre(socket):
-    data=socket.recv(1024)
-    print data
-    pass
-
-def enviar (socket):
-    data =raw_input()
-    socket.sendall(data)
-    pass
-
-if __name__ == "__main__":
-    HOST = 'localhost'    # The remote host
-    PORT = 50007              # The same port as used by the server
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((HOST,PORT))
-    data =raw_input()
-    fil = threading.Thread(target = enviar, args=(s,data))
-    fil2 = threading.Thread(target = rebre, args=(s,))
-    fil.start()
-    fil2.start()
+HOST = 'localhost'    # The remote host
+PORT = 50010              # The same port as used by the server
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST,PORT))
+data=""
+def rebre(s):
     while True:
-        
-        fil.join()
-        fil2.join()
-        
-        ##enviar(s)
-        ##rebre(s)
+        data=s.recv(1024)
+        print data
 
-    a=s.recv(1024)
-    print a
-    s.close()
+        if data=="bye":
+            s.sendall(data) 
+            break       
 
-    pass
+def enviar (s,data):
+    while True:
+        data =raw_input()
+        if data:
+            s.sendall(data)
+   
+        if data =="bye":
+            s.sendall(data)
+            break
+            
+
+
+fil = threading.Thread(target = rebre, args=(s,))
+fil2 = threading.Thread(target = enviar, args=(s,data))
+fil2.daemon= True
+fil.start()
+fil2.start() 
+fil.join()  
+
+s.close()
+

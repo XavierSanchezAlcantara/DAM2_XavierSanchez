@@ -1,38 +1,46 @@
+
 # Echo server program
 import socket
 import time
 import threading
-
-
-def rebre(socket):
-    data=socket.recv(1024)
-    print data
-    pass
-
-def enviar (socket):
-    socket.sendall(data)
-    pass
-
-
-if __name__ == "__main__":
-    HOST = ''                 # Symbolic name meaning all available interfaces
-    PORT = 50007              # Arbitrary non-privileged port
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((HOST,PORT))
-    s.listen(1)
-    conn,addr = s.accept()
-    data =raw_input()
-    fil = threading.Thread(target = enviar, args=(conn,data))
-    fil2 = threading.Thread(target = rebre, args=(conn,))
-    fil.start()
-    fil2.start()
+HOST = 'localhost'                 # Symbolic name meaning all available interfaces
+PORT = 50010              # Arbitrary non-privileged port
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST,PORT))
+s.listen(1)
+conn,addr = s.accept()
+data=""
+def rebre(conn):
     while True:
         
-        
-        fil.join()
-        fil2.join()
+        data=conn.recv(1024)
+        print data
+
+        if data=="bye":
+            conn.sendall(data) 
+            break       
+
+def enviar (conn,data):
+    while True:
+        data =raw_input()
+        if data:
+            conn.sendall(data)
+            
+   
+        if data =="bye":
+            conn.sendall(data)
+            break
+
+    
+
+
+fil = threading.Thread(target = rebre, args=(conn,))
+fil2 = threading.Thread(target = enviar, args=(conn,data))
+fil2.daemon= True
+fil.start()
+fil2.start()
+fil.join()
+s.close()
+    
         
 
-    s.close()
-
-    pass
