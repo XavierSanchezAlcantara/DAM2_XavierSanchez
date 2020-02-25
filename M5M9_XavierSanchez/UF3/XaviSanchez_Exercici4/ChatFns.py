@@ -95,7 +95,7 @@ def LoadMyEntry(ChatLog,EntryText):
             ChatLog.tag_config("You", foreground="#FF8000", font=("Arial", 12, "bold"))
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
-
+ 
 
 def LoadOtherEntry(ChatLog, nom , EntryText):
     if EntryText != '':
