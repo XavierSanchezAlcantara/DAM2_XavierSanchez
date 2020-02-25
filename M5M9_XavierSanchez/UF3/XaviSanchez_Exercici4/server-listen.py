@@ -24,7 +24,7 @@ def recibir(conexion, lista):
     while True:
         #recibir mensaje
             
-        if  nom=="":
+        if  nom=="":a
             nom=conexion.recv(1024)
             lista.append((conexion,nom[:-1]))
             print "nom",nom
