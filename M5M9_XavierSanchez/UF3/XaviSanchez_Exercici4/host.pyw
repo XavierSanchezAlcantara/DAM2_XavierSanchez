@@ -10,7 +10,7 @@ from ChatFns import *
 WindowTitle = 'JChat v0.1 - Host'
 s = socket(AF_INET, SOCK_STREAM)
 HOST = ''#gethostname()
-PORT = 8011
+PORT = 50010
 conn = ''
 s.bind((HOST, PORT))
 

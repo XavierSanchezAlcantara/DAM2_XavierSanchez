@@ -32,7 +32,6 @@ def enviar (s,data):
 fil = threading.Thread(target = rebre, args=(s,))
 fil2 = threading.Thread(target = enviar, args=(s,data))
 fil2.daemon= True
-tk._test()
 fil.start()
 fil2.start() 
 fil.join()  

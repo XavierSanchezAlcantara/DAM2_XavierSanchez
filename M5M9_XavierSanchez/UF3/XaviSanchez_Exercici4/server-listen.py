@@ -4,43 +4,63 @@ import socket
 import time
 import threading
 HOST = 'localhost'                 # Symbolic name meaning all available interfaces
-PORT = 50010              # Arbitrary non-privileged port
+PORT = 50009             # Arbitrary non-privileged port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST,PORT))
-s.listen(1)
-conn,addr = s.accept()
-data=""
-def rebre(conn):
-    while True:
-        
-        data=conn.recv(1024)
-        print data
+s.listen(3)
+lista = []
 
-        if data=="bye":
-            conn.sendall(data) 
-            break       
-
-def enviar (conn,data):
+def acceptace(s):
     while True:
-        data =raw_input()
-        if data:
-            conn.sendall(data)
+        #acceptem la conexio
+        conn, addr = s.accept()
+        t = threading.Thread(target=recibir, args=(conn, lista))
+        t.start()
+       
+
+
+def recibir(conexion, lista):
+    nom=""
+    while True:
+        #recibir mensaje
+        for x in lista:
             
-   
-        if data =="bye":
-            conn.sendall(data)
-            break
+        if nom=="":
+            nom=conexion.recv(1024)
+            lista.append((conexion,nom))
+        else:
+            data = conexion.recv(1024)
+            print data
+            thread2 = threading.Thread(target=enviar, args=(conexion, data, lista))
+            thread2.start()
+            if data == "bye\n":
+                print "entro a bye"
+                conexion.close()
+                lista.remove(conexion)
+                print lista
+                break
 
+            else:
+                thread2 = threading.Thread(target=enviar, args=(conexion, data, lista))
+                thread2.start()
     
-
-
-fil = threading.Thread(target = rebre, args=(conn,))
-fil2 = threading.Thread(target = enviar, args=(conn,data))
-fil2.daemon= True
-fil.start()
-fil2.start()
-fil.join()
-s.close()
     
+def enviar(conexion, data, lista):
+       
+    for x in lista:
+        if x == conexion:
+            pass
+        else:    
+            x.sendall(data)
+
         
+        
+thread1 = threading.Thread(target=acceptace, args=(s,))
+thread1.start()
 
+
+
+
+
+thread1.join()
+s.close()

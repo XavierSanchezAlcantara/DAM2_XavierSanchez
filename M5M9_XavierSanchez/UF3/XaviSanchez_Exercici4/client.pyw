@@ -6,7 +6,7 @@ from ChatFns import *
 #---------------------------------------------------#
 WindowTitle = 'JChat v0.1 - Client'
 HOST = 'localhost'
-PORT = 8011
+PORT = 50009
 s = socket(AF_INET, SOCK_STREAM)
 
 
@@ -28,7 +28,8 @@ def ClickAction():
 
     #Send my mesage to all others
     s.sendall(EntryText)
-
+    if EntryText=="bye\n":
+        base.destroy()
 #---------------------------------------------------#
 #----------------- KEYBOARD EVENTS -----------------#
 #---------------------------------------------------#
@@ -103,6 +104,7 @@ def ReceiveData():
             LoadConnectionInfo(ChatLog, '\n [ Your partner has disconnected ] \n')
             break
     #s.close()
+
 
 thread.start_new_thread(ReceiveData,())
 
