@@ -24,7 +24,7 @@ class App(Frame):
               self.contents.get()
 
 # create the application
-myapp = App()
+myapp = App() 
 
 #
 # here are method calls to the window manager class
