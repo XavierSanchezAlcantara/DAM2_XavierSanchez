@@ -85,7 +85,7 @@ def LoadConnectionInfo(ChatLog, EntryText):
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
 
-def LoadMyEntry(ChatLog, EntryText):
+def LoadMyEntry(ChatLog,EntryText):
     if EntryText != '':
         ChatLog.config(state=NORMAL)
         if ChatLog.index('end') != None:
@@ -97,7 +97,7 @@ def LoadMyEntry(ChatLog, EntryText):
             ChatLog.yview(END)
 
 
-def LoadOtherEntry(ChatLog, EntryText):
+def LoadOtherEntry(ChatLog, nom , EntryText):
     if EntryText != '':
         ChatLog.config(state=NORMAL)
         if ChatLog.index('end') != None:
@@ -105,8 +105,8 @@ def LoadOtherEntry(ChatLog, EntryText):
                 LineNumber = float(ChatLog.index('end'))-1.0
             except:
                 pass
-            ChatLog.insert(END, "Other: " + EntryText)
-            ChatLog.tag_add("Other", LineNumber, LineNumber+0.6)
-            ChatLog.tag_config("Other", foreground="#04B404", font=("Arial", 12, "bold"))
+            ChatLog.insert(END, nom+":" + EntryText)
+            ChatLog.tag_add(nom+":", LineNumber, LineNumber+0.6)
+            ChatLog.tag_config(nom+":", foreground="#04B404", font=("Arial", 12, "bold"))
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)

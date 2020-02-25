@@ -95,7 +95,8 @@ def ReceiveData():
             LoadConnectionInfo(ChatLog, '\n [ Your partner has disconnected ] \n')
             break
         if data != '':
-            LoadOtherEntry(ChatLog, data)
+            [nom,mensaje]=data.split(":")
+            LoadOtherEntry(ChatLog,nom, mensaje)
             if base.focus_get() == None:
                 FlashMyWindow(WindowTitle)
                 playsound('notif.wav')

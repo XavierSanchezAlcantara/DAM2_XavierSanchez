@@ -23,15 +23,15 @@ def recibir(conexion, lista):
     nom=""
     while True:
         #recibir mensaje
-        for x in lista:
             
-        if nom=="":
+        if  nom=="":
             nom=conexion.recv(1024)
-            lista.append((conexion,nom))
+            lista.append((conexion,nom[:-1]))
+            print "nom",nom
         else:
             data = conexion.recv(1024)
             print data
-            thread2 = threading.Thread(target=enviar, args=(conexion, data, lista))
+            thread2 = threading.Thread(target=enviar, args=(conexion, nom, data))
             thread2.start()
             if data == "bye\n":
                 print "entro a bye"
@@ -40,18 +40,16 @@ def recibir(conexion, lista):
                 print lista
                 break
 
-            else:
-                thread2 = threading.Thread(target=enviar, args=(conexion, data, lista))
-                thread2.start()
+
     
     
-def enviar(conexion, data, lista):
+def enviar(conexion, nom, data):
        
     for x in lista:
-        if x == conexion:
+        if x[0] == conexion:
             pass
         else:    
-            x.sendall(data)
+            x[0].sendall(nom[:-1]+":"+data)
 
         
         
