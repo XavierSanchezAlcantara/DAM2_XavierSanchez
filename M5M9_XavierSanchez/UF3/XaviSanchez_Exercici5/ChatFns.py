@@ -116,7 +116,7 @@ def LoadOtherEntry(ChatLog, EntryText):
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
 
-             
+            
 def receive_image(s,size):
     im=open(size,'wb')
     r_size=0
