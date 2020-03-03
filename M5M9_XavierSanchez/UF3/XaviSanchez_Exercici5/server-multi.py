@@ -1,11 +1,12 @@
 import socket, threading
 from ChatFns import HOST, PORT
-
+from ChatFns import *
+import base64
 def accept_client():
     while True:
         #accept
         cli_sock, cli_add = ser_sock.accept()
-        uname = cli_sock.recv(1024)
+        uname = cli_sock.recv(1024)[:-1]
         CONNECTION_LIST.append((uname, cli_sock))
         print('%s is now connected' %uname)
         thread_client = threading.Thread(target = broadcast_usr, args=[uname, cli_sock])
@@ -17,12 +18,15 @@ def broadcast_usr(uname, cli_sock):
         try:
             data = cli_sock.recv(1024)
             if data:
-                print "{0} spoke {1}".format(uname, data)
-                b_usr(cli_sock, uname, data)
-                if data[:-1] == "Bye":
-                    CONNECTION_LIST.remove((uname, cli_sock))
-                    cli_sock.close()
-                    break
+                if data.split(" ")[0] == "/image":
+                    receive_image(cli_sock,data.split(" "[1]))
+                else:
+                    print "{0} spoke {1}".format(uname, data)
+                    b_usr(cli_sock, uname, data)
+                    if data[:-1] == "Bye":
+                        CONNECTION_LIST.remove((uname, cli_sock))
+                        cli_sock.close()
+                        break
         except Exception as x:
             print(x.message)
             break

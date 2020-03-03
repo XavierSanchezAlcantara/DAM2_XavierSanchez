@@ -27,10 +27,11 @@ def ClickAction():
     EntryBox.delete("0.0",END)
 
     #Send my mesage to all others
-    s.sendall(EntryText)
     if EntryText[:-1] == "Bye":
         s.close()
         base.destroy()
+    else:
+        s.sendall(EntryText)
 
 #---------------------------------------------------#
 #----------------- KEYBOARD EVENTS -----------------#

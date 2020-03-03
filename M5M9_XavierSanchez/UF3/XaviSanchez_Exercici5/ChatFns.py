@@ -2,6 +2,7 @@ from Tkinter import *
 from socket import *
 import urllib
 import re
+import base64
 import pygame
 #import win32gui
 
@@ -46,7 +47,6 @@ def stopmusic():
 #HOW TO PLAY SONG:
 initMixer()
 #playmusic(filename)
-
 
 
 def FlashMyWindow(title):
@@ -109,9 +109,25 @@ def LoadOtherEntry(ChatLog, EntryText):
                 LineNumber = float(ChatLog.index('end'))-1.0
             except:
                 pass
-            text = EntryText.split(':')
-            ChatLog.insert(END, text[0][:-1] + ": " + text[1])
+            text = EntryText.split(':',1)
+            ChatLog.insert(END, text[0] + ": " + text[1])
             ChatLog.tag_add(text[0] + ": ", LineNumber, LineNumber+float('0.' + str(len(text[0] + ":"))))
             ChatLog.tag_config(text[0] + ": ", foreground="#04B404", font=("Arial", 12, "bold"))
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
+
+             
+def receive_image(s,size):
+    im=open(size,'wb')
+    r_size=0
+    while r_size<size:
+        t=s.recv(4096)
+        im.write(t.split(':'[-1]))
+        
+def send_image(s,path):
+    im= open(path,'rb')
+    data = im.read()
+    c_data= data.encode('base64')
+    size= len(c_data)
+    s.sendall('/image'+str(size))
+    s.sendall('/image'+str(c_data))
