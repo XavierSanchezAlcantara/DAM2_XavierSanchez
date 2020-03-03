@@ -5,6 +5,10 @@ import re
 import pygame
 #import win32gui
 
+HOST = 'localhost'
+PORT = 5011
+
+
 def getmixerargs():
     pygame.mixer.init()
     freq, size, chan = pygame.mixer.get_init()
@@ -85,7 +89,7 @@ def LoadConnectionInfo(ChatLog, EntryText):
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
 
-def LoadMyEntry(ChatLog,EntryText):
+def LoadMyEntry(ChatLog, EntryText):
     if EntryText != '':
         ChatLog.config(state=NORMAL)
         if ChatLog.index('end') != None:
@@ -95,9 +99,9 @@ def LoadMyEntry(ChatLog,EntryText):
             ChatLog.tag_config("You", foreground="#FF8000", font=("Arial", 12, "bold"))
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
- 
 
-def LoadOtherEntry(ChatLog, nom , EntryText):
+
+def LoadOtherEntry(ChatLog, EntryText):
     if EntryText != '':
         ChatLog.config(state=NORMAL)
         if ChatLog.index('end') != None:
@@ -105,8 +109,9 @@ def LoadOtherEntry(ChatLog, nom , EntryText):
                 LineNumber = float(ChatLog.index('end'))-1.0
             except:
                 pass
-            ChatLog.insert(END, nom+":" + EntryText)
-            ChatLog.tag_add(nom+":", LineNumber, LineNumber+0.6)
-            ChatLog.tag_config(nom+":", foreground="#04B404", font=("Arial", 12, "bold"))
+            text = EntryText.split(':')
+            ChatLog.insert(END, text[0][:-1] + ": " + text[1])
+            ChatLog.tag_add(text[0] + ": ", LineNumber, LineNumber+float('0.' + str(len(text[0] + ":"))))
+            ChatLog.tag_config(text[0] + ": ", foreground="#04B404", font=("Arial", 12, "bold"))
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)

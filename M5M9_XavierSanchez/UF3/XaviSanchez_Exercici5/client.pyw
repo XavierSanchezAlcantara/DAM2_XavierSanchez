@@ -1,12 +1,12 @@
-import thread
+import threading
 from ChatFns import *
 
 #---------------------------------------------------#
 #---------INITIALIZE CONNECTION VARIABLES-----------#
 #---------------------------------------------------#
 WindowTitle = 'JChat v0.1 - Client'
-HOST = 'localhost'
-PORT = 50009
+#HOST = 'localhost'
+#PORT = 5011
 s = socket(AF_INET, SOCK_STREAM)
 
 
@@ -28,8 +28,10 @@ def ClickAction():
 
     #Send my mesage to all others
     s.sendall(EntryText)
-    if EntryText=="bye\n":
+    if EntryText[:-1] == "Bye":
+        s.close()
         base.destroy()
+
 #---------------------------------------------------#
 #----------------- KEYBOARD EVENTS -----------------#
 #---------------------------------------------------#
@@ -84,6 +86,8 @@ def ReceiveData():
     try:
         s.connect((HOST, PORT))
         LoadConnectionInfo(ChatLog, '[ Succesfully connected ]\n---------------------------------------------------------------')
+        LoadOtherEntry(ChatLog, 'Server :Enter your name\n')
+
     except:
         LoadConnectionInfo(ChatLog, '[ Unable to connect ]')
         return
@@ -95,8 +99,7 @@ def ReceiveData():
             LoadConnectionInfo(ChatLog, '\n [ Your partner has disconnected ] \n')
             break
         if data != '':
-            [nom,mensaje]=data.split(":")
-            LoadOtherEntry(ChatLog,nom, mensaje)
+            LoadOtherEntry(ChatLog, data)
             if base.focus_get() == None:
                 FlashMyWindow(WindowTitle)
                 playsound('notif.wav')
@@ -106,8 +109,9 @@ def ReceiveData():
             break
     #s.close()
 
+t = threading.Thread(target=ReceiveData)
+t.daemon = True
+t.start()
 
-thread.start_new_thread(ReceiveData,())
 
 base.mainloop()
- 
