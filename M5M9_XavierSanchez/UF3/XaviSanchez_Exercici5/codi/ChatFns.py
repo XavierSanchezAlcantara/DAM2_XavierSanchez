@@ -2,12 +2,13 @@ from Tkinter import *
 from socket import *
 import urllib
 import re
-import base64
 import pygame
+import time
+from base64 import b64encode
 #import win32gui
 
 HOST = 'localhost'
-PORT = 5011
+PORT = 5021
 
 
 def getmixerargs():
@@ -47,6 +48,7 @@ def stopmusic():
 #HOW TO PLAY SONG:
 initMixer()
 #playmusic(filename)
+
 
 
 def FlashMyWindow(title):
@@ -116,58 +118,36 @@ def LoadOtherEntry(ChatLog, EntryText):
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
 
-def ReceiveImage(data,s):
-    print "Entra a ReceiveImage"
-    path = "/home/abosch/Documents/images/"
-    dtime = datetime.datetime.now()
-    basename = "img"+str(dtime)+".png"
-    print "basename ---------->"+basename
+## functions with send and recive image
 
-    img = open( path + basename,'wb')
-    text = data.split() # /image
-    size = text[-1]
-    print "text -------------->" + text[0] + " " + text[1]
-    r_size = 0
+def sendImage(s, path):
 
-    t = s.recv(40960000) # Recibir c_data de la imagen (user: /image c_data)
+    #######Open image######
+    s.sendall("quiere enviar una imagen")
+    myfile = open(path, 'rb')
 
-    print "t ------------------>" + t
-    c_data = t.split(' ') # Separar el /image del cdata
-    print "c_data ------------->" +c_data[0] + " " + c_data[1]
-    r_size += len(c_data[-1])
-
-    while r_size < int(size):
-        print "COMPROVADOR " + size,len(c_data)
-        t2 = s.recv(40960000)
-        c_data[-1] += t2
-        r_size += len(t2)
-
-    img.write(c_data[-1].decode('base64'))
-    img.close()
-    print "Guardado"
-
-    return "/image "+ str(path+basename)
-
-def SendImage(EntryText,s):
+    #recibir tamano imagen
+    data = myfile.read()
+    bytes = data.encode('base64')
+    size = len(bytes)
+    print size
+    time.sleep(2.4)
 
 
-    if "\n" in EntryText:
-        EntryText = EntryText[:-1]
+    ######send image size to server########
+    print "enviando imagen"
+    s.sendall("/image"+str(size))
+    s.sendall("/image"+bytes)
+    
+    #print bytes
+    myfile.close()
 
-    text = EntryText.split()
-    print "Entry text -->" + EntryText
-    print "text[1] -->" +text[0]
+def recvImage(s, size): # jgfkj:/image 78687
+    print 'recibiendo imagen...'
+    data = s.recv(4096)
+    print "size" + size
+    print " data" + data
+    img = open('imgRecibidas/nueva.png','wb')
+    c_data = data.decode('base64')
+    img.write(c_data)
 
-
-
-    img = open(text[1],'rb') # Abrir la imagen
-    data = img.read()
-    c_data = data.encode('base64') # data codificado
-    size = len(c_data)
-    print "Data------------------>" + data
-    print "Size------------------>" + str(size)
-    print "c_data---------------->" + c_data
-    s.sendall('/image ' + str(size))
-    time.sleep(1)
-    s.sendall('/image ' + c_data)
-    print "Enviado"

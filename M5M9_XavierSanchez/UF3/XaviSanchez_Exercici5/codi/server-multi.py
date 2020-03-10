@@ -1,6 +1,8 @@
 import socket, threading
-from ChatFns import HOST, PORT,receive_image,send_image
+from ChatFns import HOST, PORT, recvImage
 import base64
+#from PIL import Image, ImageOps
+
 def accept_client():
     while True:
         #accept
@@ -12,17 +14,19 @@ def accept_client():
         thread_client.daemon = True
         thread_client.start()
 
-def broadcast_usr(uname, cli_sock):
+def broadcast_usr(uname, cli_sock,):
+
     while True:
         try:
             size = cli_sock.recv(4096)
             data = cli_sock.recv(4096)
             if data:
                 print "{0} spoke {1}".format(uname, data)
-                if "/image" in data:
-                    receive_image(cli_sock,data)
-                b_usr(cli_sock,uname,data)
+                if data == "/image\n":
+                    print "entro en recibir imagen [server]"
+                    recvImage(cli_sock,size,data)
                     
+                b_usr(cli_sock, uname, data)
                 
                 if data[:-1] == "Bye":
                     CONNECTION_LIST.remove((uname, cli_sock))

@@ -1,6 +1,14 @@
 import threading
 from ChatFns import *
 
+
+#variables
+
+image = "enviarImg/bandera.jpg"
+
+
+
+
 #---------------------------------------------------#
 #---------INITIALIZE CONNECTION VARIABLES-----------#
 #---------------------------------------------------#
@@ -8,7 +16,7 @@ WindowTitle = 'JChat v0.1 - Client'
 #HOST = 'localhost'
 #PORT = 5011
 s = socket(AF_INET, SOCK_STREAM)
-image= "codi/enviarImg/bandera.jpg"
+
 
 
 
@@ -27,14 +35,14 @@ def ClickAction():
     EntryBox.delete("0.0",END)
 
     #Send my mesage to all others
-    if "/image" in EntryText:
-        SendImage(EntryText,s)
-    else:
-        s.sendall(EntryText)
+    s.sendall(EntryText)
+   
+    #Send image
 
-
-    if EntryText[:-1] == "Bye":
-        s.close()
+    if EntryText == "/image\n":
+        sendImage(s, image)
+        
+    elif EntryText[:-1] == "bye\n":   #Exit the program
         base.destroy()
 
 
@@ -105,6 +113,10 @@ def ReceiveData():
             LoadConnectionInfo(ChatLog, '\n [ Your partner has disconnected ] \n')
             break
         if data != '':
+            #if data in "/image":
+                #recvImage()
+
+            #[nom,mensaje]=data.split(":")    
             LoadOtherEntry(ChatLog, data)
             if base.focus_get() == None:
                 FlashMyWindow(WindowTitle)
