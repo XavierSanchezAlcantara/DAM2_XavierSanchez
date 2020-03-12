@@ -118,7 +118,7 @@ def LoadOtherEntry(ChatLog, EntryText):
 
 def ReceiveImage(data,s):
     print "Entra a ReceiveImage"
-    path = "/home/abosch/Documents/images/"
+    path = "/home/xavi2/Escriptori/Gitub/DAM2_XavierSanchez/M5M9_XavierSanchez/UF3/XaviSanchez_Exercici5"
     dtime = datetime.datetime.now()
     basename = "img"+str(dtime)+".png"
     print "basename ---------->"+basename
