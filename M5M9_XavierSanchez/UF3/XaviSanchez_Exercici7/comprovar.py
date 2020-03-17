@@ -1,7 +1,7 @@
 import urlparse
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import smtplib, ssl
-password = "XSanchez28"
+password = "DollarDuck123"
 context = ssl.create_default_context()
 
 class GetHandler(BaseHTTPRequestHandler):
@@ -22,9 +22,9 @@ class GetHandler(BaseHTTPRequestHandler):
             #CORREU
             mail = smtplib.SMTP_SSL("smtp.gmail.com", 465) 
             mail.ehlo() #missatge de salutació amb el servei/servidor
-            mail.login("xavisnchez28@gmail.com", password) #login to gmail smtp
+            mail.login("enterprisedollarduck@gmail.com", password) #login to gmail smtp
             message = "Subject: Hello There!" + "\n\n\nHa intentat entrar: %s" % str(self.client_address) #Cos del missatge
-            mail.sendmail("xavisnchez28@gmail.com", "enterprisedollarduck@gmail.com", message) #envia el missatge
+            mail.sendmail("enterprisedollarduck@gmail.com", "enterprisedollarduck@gmail.com", message) #envia el missatge
             mail.quit() 
         else:
             self.send_error(404, "Not Found")
